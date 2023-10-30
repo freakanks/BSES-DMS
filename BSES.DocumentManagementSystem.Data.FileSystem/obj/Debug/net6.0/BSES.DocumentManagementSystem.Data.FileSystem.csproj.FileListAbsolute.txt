@@ -1,0 +1,17 @@
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\bin\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.deps.json
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\bin\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\bin\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.csproj.AssemblyReference.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.GeneratedMSBuildEditorConfig.editorconfig
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.AssemblyInfoInputs.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.AssemblyInfo.cs
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.csproj.CoreCompileInputs.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\refint\BSES.DocumentManagementSystem.Data.FileSystem.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\ref\BSES.DocumentManagementSystem.Data.FileSystem.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\bin\Debug\net6.0\BSES.DocumentManagementSystem.Data.Contracts.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\bin\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\bin\Debug\net6.0\BSES.DocumentManagementSystem.Data.Contracts.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\bin\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Data.FileSystem\obj\Debug\net6.0\BSES.DocumentManagementSystem.Data.FileSystem.csproj.CopyComplete

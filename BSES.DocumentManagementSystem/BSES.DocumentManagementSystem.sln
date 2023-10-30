@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem", "BSES.DocumentManagementSystem.csproj", "{ABF32DED-B3D1-46C3-BB88-560E6D7AFC19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Data.Contracts", "..\BSES.DocumentManagementSystem.Data.Contracts\BSES.DocumentManagementSystem.Data.Contracts.csproj", "{A2E33989-DD21-4E3E-B100-997BB3BF6A9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Data", "..\BSES.DocumentManagementSystem.Data\BSES.DocumentManagementSystem.Data.csproj", "{30BA53A1-B19E-4FC2-AE2B-88F31B3CA0A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Business.Contracts", "..\BSES.DocumentManagementSystem.Business.Contracts\BSES.DocumentManagementSystem.Business.Contracts.csproj", "{0B804A55-ECAC-4ED3-BD93-B8B3791CB97F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Business", "..\BSES.DocumentManagementSystem.Business\BSES.DocumentManagementSystem.Business.csproj", "{E4AEFC59-BA40-42DB-A8B6-D8AC5C74F183}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Entities.Contracts", "..\BSES.DocumentManagementSystem.Entities.Contracts\BSES.DocumentManagementSystem.Entities.Contracts.csproj", "{3AE86901-1A81-44E5-80E3-E80DA560DC78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Entities", "..\BSES.DocumentManagementSystem.Entities\BSES.DocumentManagementSystem.Entities.csproj", "{4035B1CD-C66D-4C50-B4CF-B356DC23209E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Common", "..\BSES.DocumentManagementSystem.Common\BSES.DocumentManagementSystem.Common.csproj", "{1FF32C89-F065-408A-985D-938F7E053DFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSES.DocumentManagementSystem.Data.FileSystem", "..\BSES.DocumentManagementSystem.Data.FileSystem\BSES.DocumentManagementSystem.Data.FileSystem.csproj", "{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABF32DED-B3D1-46C3-BB88-560E6D7AFC19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF32DED-B3D1-46C3-BB88-560E6D7AFC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF32DED-B3D1-46C3-BB88-560E6D7AFC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF32DED-B3D1-46C3-BB88-560E6D7AFC19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E33989-DD21-4E3E-B100-997BB3BF6A9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E33989-DD21-4E3E-B100-997BB3BF6A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E33989-DD21-4E3E-B100-997BB3BF6A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E33989-DD21-4E3E-B100-997BB3BF6A9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30BA53A1-B19E-4FC2-AE2B-88F31B3CA0A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30BA53A1-B19E-4FC2-AE2B-88F31B3CA0A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30BA53A1-B19E-4FC2-AE2B-88F31B3CA0A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30BA53A1-B19E-4FC2-AE2B-88F31B3CA0A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B804A55-ECAC-4ED3-BD93-B8B3791CB97F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B804A55-ECAC-4ED3-BD93-B8B3791CB97F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B804A55-ECAC-4ED3-BD93-B8B3791CB97F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B804A55-ECAC-4ED3-BD93-B8B3791CB97F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4AEFC59-BA40-42DB-A8B6-D8AC5C74F183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4AEFC59-BA40-42DB-A8B6-D8AC5C74F183}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4AEFC59-BA40-42DB-A8B6-D8AC5C74F183}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4AEFC59-BA40-42DB-A8B6-D8AC5C74F183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AE86901-1A81-44E5-80E3-E80DA560DC78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE86901-1A81-44E5-80E3-E80DA560DC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE86901-1A81-44E5-80E3-E80DA560DC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE86901-1A81-44E5-80E3-E80DA560DC78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4035B1CD-C66D-4C50-B4CF-B356DC23209E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4035B1CD-C66D-4C50-B4CF-B356DC23209E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4035B1CD-C66D-4C50-B4CF-B356DC23209E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4035B1CD-C66D-4C50-B4CF-B356DC23209E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FF32C89-F065-408A-985D-938F7E053DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF32C89-F065-408A-985D-938F7E053DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF32C89-F065-408A-985D-938F7E053DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FF32C89-F065-408A-985D-938F7E053DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33BD2FE8-0C5A-44BD-A1E4-86071B60B5BF}
+	EndGlobalSection
+EndGlobal

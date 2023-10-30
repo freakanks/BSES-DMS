@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "BSES.DocumentManagementSystem.Entities/1.0.0": {
+        "dependencies": {
+          "BSES.DocumentManagementSystem.Entities.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "BSES.DocumentManagementSystem.Entities.dll": {}
+        }
+      },
+      "BSES.DocumentManagementSystem.Entities.Contracts/1.0.0": {
+        "runtime": {
+          "BSES.DocumentManagementSystem.Entities.Contracts.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BSES.DocumentManagementSystem.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BSES.DocumentManagementSystem.Entities.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

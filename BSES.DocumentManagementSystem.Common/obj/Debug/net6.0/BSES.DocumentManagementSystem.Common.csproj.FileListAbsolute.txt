@@ -1,0 +1,12 @@
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\bin\Debug\net6.0\BSES.DocumentManagementSystem.Common.deps.json
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\bin\Debug\net6.0\BSES.DocumentManagementSystem.Common.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\bin\Debug\net6.0\BSES.DocumentManagementSystem.Common.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\BSES.DocumentManagementSystem.Common.csproj.AssemblyReference.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\BSES.DocumentManagementSystem.Common.GeneratedMSBuildEditorConfig.editorconfig
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\BSES.DocumentManagementSystem.Common.AssemblyInfoInputs.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\BSES.DocumentManagementSystem.Common.AssemblyInfo.cs
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\BSES.DocumentManagementSystem.Common.csproj.CoreCompileInputs.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\BSES.DocumentManagementSystem.Common.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\refint\BSES.DocumentManagementSystem.Common.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\BSES.DocumentManagementSystem.Common.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Common\obj\Debug\net6.0\ref\BSES.DocumentManagementSystem.Common.dll

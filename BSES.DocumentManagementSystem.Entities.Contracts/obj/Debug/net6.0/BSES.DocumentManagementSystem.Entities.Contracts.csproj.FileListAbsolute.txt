@@ -1,0 +1,11 @@
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\bin\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.deps.json
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\bin\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\bin\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.AssemblyInfoInputs.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.AssemblyInfo.cs
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.csproj.CoreCompileInputs.cache
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\refint\BSES.DocumentManagementSystem.Entities.Contracts.dll
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\BSES.DocumentManagementSystem.Entities.Contracts.pdb
+E:\Ankur\Bses\DocumentManagementSytem\BSES.DocumentManagementSystem.Entities.Contracts\obj\Debug\net6.0\ref\BSES.DocumentManagementSystem.Entities.Contracts.dll

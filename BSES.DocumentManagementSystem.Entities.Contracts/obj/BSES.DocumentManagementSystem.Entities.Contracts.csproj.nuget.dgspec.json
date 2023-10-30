@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Entities.Contracts\\BSES.DocumentManagementSystem.Entities.Contracts.csproj": {}
+  },
+  "projects": {
+    "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Common\\BSES.DocumentManagementSystem.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Common\\BSES.DocumentManagementSystem.Common.csproj",
+        "projectName": "BSES.DocumentManagementSystem.Common",
+        "projectPath": "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Common\\BSES.DocumentManagementSystem.Common.csproj",
+        "packagesPath": "C:\\Users\\agaba\\.nuget\\packages\\",
+        "outputPath": "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\agaba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\ProgramData\\E3OfflineNuget\\E3NugetSrcLibNet48": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Extensions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Entities.Contracts\\BSES.DocumentManagementSystem.Entities.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Entities.Contracts\\BSES.DocumentManagementSystem.Entities.Contracts.csproj",
+        "projectName": "BSES.DocumentManagementSystem.Entities.Contracts",
+        "projectPath": "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Entities.Contracts\\BSES.DocumentManagementSystem.Entities.Contracts.csproj",
+        "packagesPath": "C:\\Users\\agaba\\.nuget\\packages\\",
+        "outputPath": "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Entities.Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\agaba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\ProgramData\\E3OfflineNuget\\E3NugetSrcLibNet48": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Common\\BSES.DocumentManagementSystem.Common.csproj": {
+                "projectPath": "E:\\Ankur\\Bses\\DocumentManagementSytem\\BSES.DocumentManagementSystem.Common\\BSES.DocumentManagementSystem.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
