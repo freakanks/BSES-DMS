@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BSES.DocumentManagementSystem.Business\BSES.DocumentManagementSystem.Business.csproj" />
+    <ProjectReference Include="..\BSES.DocumentManagementSystem.Entities\BSES.DocumentManagementSystem.Entities.csproj" />
   </ItemGroup>
 
 </Project>

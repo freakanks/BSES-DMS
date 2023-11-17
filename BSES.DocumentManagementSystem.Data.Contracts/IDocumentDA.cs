@@ -11,16 +11,16 @@
         /// <param name="documentPath"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>File as a stream.</returns>
-        Task<FileStream> GetDocumentAsync(string documentPath, CancellationToken cancellationToken);
+        Task<Stream> GetDocumentAsync(string documentPath, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Asynchronously saves the document stream with documentID provided.
+        /// Asynchronously saves the document stream with the name provided.
         /// </summary>
-        /// <param name="documentID"></param>
+        /// <param name="documentName"></param>
         /// <param name="documentStream"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Path of stored document.</returns>
-        Task<string> SaveDocumentAsync(string documentID, Stream documentStream, CancellationToken cancellationToken);
+        Task<string> SaveDocumentAsync(string documentName, Stream documentStream, CancellationToken cancellationToken);
 
         /// <summary>
         /// Asynchronously removes the document from the path specified.
@@ -28,6 +28,6 @@
         /// <param name="documentPath"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Success/Failure.</returns>
-        Task<bool> RemoveDocumentAsync(string documentPath, CancellationToken cancellationToken);
+        bool RemoveDocumentAsync(string documentPath, CancellationToken cancellationToken);
     }
 }

@@ -13,7 +13,7 @@ namespace BSES.DocumentManagementSystem.Data.Contracts
         /// <param name="documentID"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Document information with the latest version.</returns>
-        Task<IDocumentEntity> GetDocumentAsync(string documentID, CancellationToken cancellationToken);
+        Task<IDocumentEntity?> GetDocumentAsync(string documentID, CancellationToken cancellationToken);
         
         /// <summary>
         /// Asynchrobously saves the document information to the databse.

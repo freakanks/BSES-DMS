@@ -8,6 +8,13 @@ namespace BSES.DocumentManagementSystem.Data.Contracts
     public interface IDocumentUserEntityDA
     {
         /// <summary>
+        /// Asynchronously gets the User for the user id.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<IDocumentUserEntity?> GetAsync(string userID, CancellationToken cancellationToken);
+        /// <summary>
         /// Asynchrnously saves the user in database.
         /// </summary>
         /// <param name="user"></param>
