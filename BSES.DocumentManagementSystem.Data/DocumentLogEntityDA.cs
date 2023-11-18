@@ -1,13 +1,7 @@
 ﻿using BSES.DocumentManagementSystem.Data.Contracts;
 using BSES.DocumentManagementSystem.Entities.Contracts;
-using BSES.DocumentManagementSystem.Entities.Contracts.Document;
-using BSES.DocumentManagementSystem.Entities.Document;
+using BSES.DocumentManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSES.DocumentManagementSystem.Data
 {
@@ -25,13 +19,8 @@ namespace BSES.DocumentManagementSystem.Data
         /// <param name="accessLog"></param>
         /// <returns></returns>
         private IDocumentLogEntity ModelToLogEntity(AccessLog accessLog) =>
-            new DocumentLogEntity()
+            new DocumentLogEntity(accessLog.ID, accessLog.DocumentID, accessLog.UserId, Enum.TryParse($"{accessLog.ActionTaken}", out DocumentAction action) ? action : DocumentAction.Read)
             {
-                ActionTaken = Enum.TryParse($"{accessLog.ActionTaken}", out DocumentAction action) ? action : DocumentAction.Read,
-                DocumentID = accessLog.DocumentID,
-                LogId = accessLog.ID,
-                UserId = accessLog.UserId,
-
                 CreatedDateTime = accessLog.CreatedDateTime,
                 UpdatedDateTime = accessLog.UpdatedDateTime,
                 CreatedUserID = accessLog.CreatedUserID,
@@ -66,7 +55,6 @@ namespace BSES.DocumentManagementSystem.Data
         {
             _context = context;
         }
-
 
 
         public async Task<IEnumerable<IDocumentLogEntity>> GetDocumentLogsAsync(string documentID, CancellationToken cancellationToken)

@@ -1,10 +1,34 @@
-﻿using BSES.DocumentManagementSystem.Entities.Contracts.Document;
+﻿
+using BSES.DocumentManagementSystem.Entities.Contracts;
 
-namespace BSES.DocumentManagementSystem.Entities.Document
+namespace BSES.DocumentManagementSystem.Entities
 {
-    public class DocumentLogEntity: BaseEntity, IDocumentLogEntity
+    ///<inheritdoc/>
+    public class DocumentLogEntity : BaseEntity, IDocumentLogEntity
     {
-        public long LogId { get; set; }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public DocumentLogEntity(string documentId, string userID, DocumentAction documentAction)
+        {
+            DocumentID = documentId;
+            UserId = userID;
+            ActionTaken = documentAction;
+        }
+
+        /// <summary>
+        /// Paremeterized Constructor.
+        /// </summary>
+        /// <param name="logID"></param>
+        public DocumentLogEntity(long logID, string documentId, string userID, DocumentAction documentAction)
+        {
+            LogId = logID;
+            DocumentID = documentId;
+            UserId = userID;
+            ActionTaken = documentAction;
+        }
+
+        public long LogId { get; }
         public string DocumentID { get; set; }
         public string UserId { get; set; }
         public DocumentAction ActionTaken { get; set; }

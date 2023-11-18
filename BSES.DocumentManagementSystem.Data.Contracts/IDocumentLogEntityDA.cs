@@ -1,4 +1,4 @@
-﻿using BSES.DocumentManagementSystem.Entities.Contracts.Document;
+﻿using BSES.DocumentManagementSystem.Entities.Contracts;
 
 namespace BSES.DocumentManagementSystem.Data.Contracts
 {

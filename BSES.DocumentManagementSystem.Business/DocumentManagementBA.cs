@@ -1,7 +1,9 @@
 ﻿using BSES.DocumentManagementSystem.Business.Contracts;
 using BSES.DocumentManagementSystem.Common;
 using BSES.DocumentManagementSystem.Data.Contracts;
+using BSES.DocumentManagementSystem.Entities;
 using BSES.DocumentManagementSystem.Entities.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace BSES.DocumentManagementSystem.Business
@@ -24,14 +26,30 @@ namespace BSES.DocumentManagementSystem.Business
         private readonly IDocumentEntityDA _documentEntityDA;
 
         /// <summary>
+        /// Readonly instance of Data Access for access logs for documents.
+        /// </summary>
+        private readonly IDocumentLogEntityDA _documentLogEntityDA;
+
+        /// <summary>
+        /// Current User Accessing the system.
+        /// </summary>
+        private readonly IDocumentUserEntity? _userEntity;
+
+        /// <summary>
         /// Default constructor.
         /// </summary>
         /// <param name="logger"></param>
-        public DocumentManagementBA(ILogger<DocumentManagementBA> logger, IDocumentDA documentDA, IDocumentEntityDA documentEntityDA)
+        /// <param name="documentDA"></param>
+        /// <param name="documentEntityDA"></param>
+        /// <param name="documentLogEntityDA"></param>
+        /// <param name="httpContextAccessor"></param>
+        public DocumentManagementBA(ILogger<DocumentManagementBA> logger, IDocumentDA documentDA, IDocumentEntityDA documentEntityDA, IDocumentLogEntityDA documentLogEntityDA, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _documentDA = documentDA;
             _documentEntityDA = documentEntityDA;
+            _documentLogEntityDA = documentLogEntityDA;
+            _userEntity = httpContextAccessor.HttpContext.Session.Get<IDocumentUserEntity>(DMSConstants.USER_SESSION_DATA);
         }
 
         ///<inheritdoc/>
@@ -65,11 +83,19 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
+
                 documentEntity.DocumentPath = await _documentDA.SaveDocumentAsync(documentEntity.DocumentPath, documentStream, cancellationToken);
+
+                if (string.IsNullOrEmpty(documentEntity.DocumentPath))
+                    return new Result<string>(string.Empty, false, $"Something went wrong while saving the document stream for document name {documentEntity.DocumentName}.");
+
+                documentEntity.DocumentID = $"{Guid.NewGuid()}";
 
                 var entity = await _documentEntityDA.SaveDocumentAsync(documentEntity, cancellationToken);
                 if (entity == null)
                     return new Result<string>(string.Empty, false, $"Something went wrong while saving the document entity record.");
+
+                await _documentLogEntityDA.SaveDocumentLogAsync(documentEntity.DocumentID, new DocumentLogEntity(documentEntity.DocumentID, _userEntity.UserID, DocumentAction.Write), cancellationToken);
 
                 return new Result<string>(documentEntity.DocumentID, true, string.Empty);
             }
