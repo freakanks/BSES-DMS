@@ -1,11 +1,17 @@
 using BSES.DocumentManagementSystem.Business;
+using BSES.DocumentManagementSystem.Data;
+using BSES.DocumentManagementSystem.Data.FileSystem;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddBusinessServices();
+
+///DMS Services Registration.
+builder.Services.AddDataServicesFileSystem()
+                .AddDataServicesDB()
+                .AddBusinessServices();
 
 var app = builder.Build();
 
