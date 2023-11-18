@@ -1,26 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>4d72da37-ade1-4b21-86a1-94cd472bf552</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>.</DockerfileContext>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>4d72da37-ade1-4b21-86a1-94cd472bf552</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>.</DockerfileContext>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BSES.DocumentManagementSystem.Business\BSES.DocumentManagementSystem.Business.csproj" />
-    <ProjectReference Include="..\BSES.DocumentManagementSystem.Data.FileSystem\BSES.DocumentManagementSystem.Data.FileSystem.csproj" />
-    <ProjectReference Include="..\BSES.DocumentManagementSystem.Data\BSES.DocumentManagementSystem.Data.csproj" />
-    <ProjectReference Include="..\BSES.DocumentManagementSystem.Entities\BSES.DocumentManagementSystem.Entities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BSES.DocumentManagementSystem.Business\BSES.DocumentManagementSystem.Business.csproj" />
+		<ProjectReference Include="..\BSES.DocumentManagementSystem.Data.FileSystem\BSES.DocumentManagementSystem.Data.FileSystem.csproj" />
+		<ProjectReference Include="..\BSES.DocumentManagementSystem.Data\BSES.DocumentManagementSystem.Data.csproj" />
+		<ProjectReference Include="..\BSES.DocumentManagementSystem.Entities\BSES.DocumentManagementSystem.Entities.csproj" />
+	</ItemGroup>
 
 </Project>

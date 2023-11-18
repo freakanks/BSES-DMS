@@ -1,6 +1,9 @@
 using BSES.DocumentManagementSystem.Business;
 using BSES.DocumentManagementSystem.Data;
 using BSES.DocumentManagementSystem.Data.FileSystem;
+using Serilog;
+using Serilog.AspNetCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,15 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDataServicesFileSystem()
                 .AddDataServicesDB()
                 .AddBusinessServices();
+
+builder.Host.UseSerilog((context, serviceProvider, loggerConfiguration) =>
+{
+    loggerConfiguration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(serviceProvider)
+    .Enrich.FromLogContext()
+    .WriteTo.Debug();
+});
 
 var app = builder.Build();
 

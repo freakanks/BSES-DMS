@@ -83,7 +83,6 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
-
                 documentEntity.DocumentPath = await _documentDA.SaveDocumentAsync(documentEntity.DocumentPath, documentStream, cancellationToken);
 
                 if (string.IsNullOrEmpty(documentEntity.DocumentPath))
