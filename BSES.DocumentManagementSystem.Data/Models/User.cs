@@ -23,6 +23,11 @@ namespace BSES.DocumentManagementSystem.Data
         [Required]
         public string SecretKey { get; set; }
         /// <summary>
+        /// Company Code for the user.
+        /// </summary>
+        [Required]
+        public string CompanyCode { get; set; }
+        /// <summary>
         /// Access rights of the user.
         /// </summary>
         public int UserRight { get; set; } = 0;

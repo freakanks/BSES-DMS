@@ -9,6 +9,7 @@ namespace BSES.DocumentManagementSystem.Entities
         public DocumentUserEntity(string userID,
                                   string userName,
                                   string secretKey,
+                                  string companyCode,
                                   bool isAuthenticated,
                                   DocumentUserRight userRight,
                                   UserAccessScope userAccessScope)
@@ -16,6 +17,7 @@ namespace BSES.DocumentManagementSystem.Entities
             UserID = userID;
             UserName = userName;
             SecretKey = secretKey;
+            CompanyCode = companyCode;
             IsAuthenticated = isAuthenticated;
             UserRight = userRight;
             UserAccessScope = userAccessScope;
@@ -24,8 +26,10 @@ namespace BSES.DocumentManagementSystem.Entities
         public string UserID { get; }
         public string UserName { get; }
         public string SecretKey { get; }
+        public string CompanyCode { get; }
         public bool IsAuthenticated { get; }
         public DocumentUserRight UserRight { get; set; } = DocumentUserRight.ReadAccess;
         public UserAccessScope UserAccessScope { get; set; } = UserAccessScope.InternalUser;
+
     }
 }

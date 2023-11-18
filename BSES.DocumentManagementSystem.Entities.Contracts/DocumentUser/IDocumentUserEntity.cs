@@ -23,6 +23,11 @@ namespace BSES.DocumentManagementSystem.Entities.Contracts
         public string SecretKey { get; }
 
         /// <summary>
+        /// Company for which the user is regiestered.
+        /// </summary>
+        public string CompanyCode { get; }
+
+        /// <summary>
         /// Flag denoting if the user is autheniticated.
         /// </summary>
         public bool IsAuthenticated { get; }

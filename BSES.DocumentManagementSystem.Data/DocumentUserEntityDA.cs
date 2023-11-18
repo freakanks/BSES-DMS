@@ -20,7 +20,7 @@ namespace BSES.DocumentManagementSystem.Data
         /// <param name="user"></param>
         /// <returns></returns>
         private IDocumentUserEntity? ModelToUserEntity(User? user) => user == null ? null :
-            new DocumentUserEntity(user.UserID, user.UserName, user.SecretKey, false,
+            new DocumentUserEntity(user.UserID, user.UserName, user.SecretKey, user.CompanyCode, false,
                 Enum.TryParse($"{user.UserRight}", out DocumentUserRight userRight) ? userRight : DocumentUserRight.ReadAccess,
                 Enum.TryParse($"{user.UserAccessScope}", out UserAccessScope accessScope) ? accessScope : UserAccessScope.InternalUser)
             {
@@ -41,6 +41,7 @@ namespace BSES.DocumentManagementSystem.Data
             {
                 UserID = user.UserID,
                 SecretKey = user.SecretKey,
+                CompanyCode = user.CompanyCode,
                 UserName = user.UserName,
                 UserAccessScope = (int)user.UserAccessScope,
                 UserRight = (int)user.UserRight,

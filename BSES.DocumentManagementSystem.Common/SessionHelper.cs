@@ -17,9 +17,9 @@ namespace BSES.DocumentManagementSystem.Common
         }
         public static void Remove<T>(this ISession session, string key) where T : class => session.Remove(key);
 
-        public static T Get<T>(this ISession session, string key) where T : class =>
+        public static T? Get<T>(this ISession session, string key) where T : class =>
             session.Keys.Contains(key) ?
             session.GetString(key).Deserialize<T>() :
-            null;
+            default;
     }
 }

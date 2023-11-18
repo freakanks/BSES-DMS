@@ -1,8 +1,9 @@
 ﻿using BSES.DocumentManagementSystem.Data.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Globalization;
+using BSES.DocumentManagementSystem.Common;
+using BSES.DocumentManagementSystem.Entities.Contracts;
 
 namespace BSES.DocumentManagementSystem.Data.FileSystem
 {
@@ -28,10 +29,11 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
         /// Default Constructor.
         /// </summary>
         /// <param name="logger"></param>
-        public DocumentDA(ILogger<DocumentDA> logger, IConfiguration configuration)
+        public DocumentDA(ILogger<DocumentDA> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
-            _basePathForStorage = configuration.GetRequiredSection("BasePathForStorage").Value ?? throw new Exception($"Base Path for storage is not defined in configuration.");
+            ReadOnlySpan<char> companyCode = httpContextAccessor?.HttpContext?.Session?.Get<IDocumentUserEntity>(DMSConstants.USER_SESSION_DATA)?.CompanyCode;
+            _basePathForStorage = configuration.GetRequiredSection($"BasePathForStorage{companyCode}").Value ?? throw new Exception($"Base Path for storage is not defined in configuration.");
             _retrialCount = int.TryParse(configuration.GetRequiredSection("RetryCount").Value, out int value) ? value : 1;
         }
 
@@ -88,7 +90,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
             {
                 try
                 {
-                    string filepath = Path.Combine(_basePathForStorage, documentName);
+                    string filepath = Path.Combine(_basePathForStorage, $"{DateTime.Today.Year}", $"{DateTime.Today.Month}", documentName);
                     using var fileStream = new FileStream(filepath, FileMode.Create, FileAccess.Write);
                     await documentStream.CopyToAsync(fileStream, cancellationToken);
 
@@ -102,5 +104,5 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
             return null;
         }
     }
-   
+
 }
