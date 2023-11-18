@@ -158,3 +158,5 @@
 /BSES.DocumentManagementSystem.Entities.Contracts/obj/Debug/net6.0/BSES.DocumentManagementSystem.Entities.Contracts.csproj.FileListAbsolute.txt
 /BSES.DocumentManagementSystem.Entities.Contracts/obj/Debug/net6.0/BSES.DocumentManagementSystem.Entities.Contracts.dll
 /BSES.DocumentManagementSystem.Entities.Contracts/obj/Debug/net6.0/BSES.DocumentManagementSystem.Entities.Contracts.pdb
+/BSES.DocumentManagementSystem.Business/bin/Debug/net6.0/BSES.DocumentManagementSystem.Entities.dll
+/BSES.DocumentManagementSystem.Business/bin/Debug/net6.0/BSES.DocumentManagementSystem.Entities.pdb
