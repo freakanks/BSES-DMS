@@ -1,3 +1,4 @@
+using BSES.DocumentManagementSystem;
 using BSES.DocumentManagementSystem.Business;
 using BSES.DocumentManagementSystem.Data;
 using BSES.DocumentManagementSystem.Data.FileSystem;
@@ -23,7 +24,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 ///DMS Services Registration.
-builder.Services.AddDistributedMemoryCache()
+builder.Services.AddJWT(builder.Configuration)
+                .AddDistributedMemoryCache()
                 .AddSession()
                 .AddHttpContextAccessor()
                 .AddDataServicesFileSystem()
