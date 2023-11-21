@@ -19,8 +19,8 @@ namespace BSES.DocumentManagementSystem.Data
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private IDocumentUserEntity? ModelToUserEntity(User? user) => user == null ? null :
-            new DocumentUserEntity(user.UserID, user.UserName, user.SecretKey, user.CompanyCode, false,
+        private IDocumentUserEntity? ModelToUserEntity(User? user, bool isAuthenticated = false) => user == null ? null :
+            new DocumentUserEntity(user.UserID, user.UserName, user.SecretKey, user.CompanyCode, isAuthenticated,
                 Enum.TryParse($"{user.UserRight}", out DocumentUserRight userRight) ? userRight : DocumentUserRight.ReadAccess,
                 Enum.TryParse($"{user.UserAccessScope}", out UserAccessScope accessScope) ? accessScope : UserAccessScope.InternalUser)
             {
@@ -80,15 +80,24 @@ namespace BSES.DocumentManagementSystem.Data
             return ModelToUserEntity(user)!;
         }
 
-        public Task<IDocumentUserEntity> UpdatesAsync(string userID, DocumentUserRight userRights, CancellationToken cancellationToken)
+        public async Task<IDocumentUserEntity> UpdatesAsync(string userID, DocumentUserRight userRights, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.SingleAsync(x => x.UserID == userID, cancellationToken);
+            user.UserRight = (int)userRights;
+            await _context.SaveChangesAsync(cancellationToken);
+            return ModelToUserEntity(user)!;
         }
 
         public async Task<IDocumentUserEntity?> GetAsync(string userID, CancellationToken cancellationToken)
         {
             var user = await _context.Users.Where(x => x.UserID == userID).FirstOrDefaultAsync(cancellationToken);
             return ModelToUserEntity(user);
+        }
+
+        public async Task<IDocumentUserEntity?> AuthenticateUserAsync(string userID, string secretKey, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users.Where(x => x.UserID == userID).FirstOrDefaultAsync(cancellationToken);
+            return ModelToUserEntity(user, user?.SecretKey == secretKey);
         }
     }
 }

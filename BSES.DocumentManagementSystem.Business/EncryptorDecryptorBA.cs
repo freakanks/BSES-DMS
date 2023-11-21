@@ -28,7 +28,19 @@ namespace BSES.DocumentManagementSystem.Business
         }
 
         ///<inheritdoc/>
+        public string Decrypt(string encryptedData, string companyCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        ///<inheritdoc/>
         public Stream Encrypt(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        ///<inheritdoc/>
+        public string Encrypt(string inputData, string companyCode)
         {
             throw new NotImplementedException();
         }

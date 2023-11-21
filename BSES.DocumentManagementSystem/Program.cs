@@ -2,7 +2,6 @@ using BSES.DocumentManagementSystem.Business;
 using BSES.DocumentManagementSystem.Data;
 using BSES.DocumentManagementSystem.Data.FileSystem;
 using Serilog;
-using Serilog.AspNetCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +23,10 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 ///DMS Services Registration.
-builder.Services.AddDataServicesFileSystem()
+builder.Services.AddDistributedMemoryCache()
+                .AddSession()
+                .AddHttpContextAccessor()
+                .AddDataServicesFileSystem()
                 .AddDataServicesDB()
                 .AddBusinessServices();
 
@@ -44,7 +46,7 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllers();
 app.UseSwagger(options =>
 {

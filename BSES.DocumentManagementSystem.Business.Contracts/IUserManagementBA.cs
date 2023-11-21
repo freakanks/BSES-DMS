@@ -13,7 +13,7 @@ namespace BSES.DocumentManagementSystem.Business.Contracts
         /// <param name="userName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>User Details.</returns>
-        Task<IDocumentUserEntity> GetDocumentUser(string userName, CancellationToken cancellationToken);
+        Task<IDocumentUserEntity?> GetDocumentUserAsync(string userName, CancellationToken cancellationToken);
 
         /// <summary>
         /// Validates the user data for uniqueness of user name, and required fields, and save user entity.
@@ -21,6 +21,15 @@ namespace BSES.DocumentManagementSystem.Business.Contracts
         /// <param name="userEntity"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Unique User ID.</returns>
-        Task<string> SaveDocumentUser(IDocumentUserEntity userEntity, CancellationToken cancellationToken);
+        Task<IDocumentUserEntity?> SaveDocumentUserAsync(IDocumentUserEntity userEntity, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Authenticates the user credentials.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="secretKey"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<IDocumentUserEntity?> AuthenticateDocumentUserAsync(string userName, string secretKey, CancellationToken cancellationToken);
     }
 }

@@ -8,6 +8,14 @@ namespace BSES.DocumentManagementSystem.Data.Contracts
     public interface IDocumentUserEntityDA
     {
         /// <summary>
+        /// Checks for the user with provided user id and validates it password.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>UserEntity with Authenitcated flag if found, else, null.</returns>
+        Task<IDocumentUserEntity?> AuthenticateUserAsync(string userID, string secretKey, CancellationToken cancellationToken);
+
+        /// <summary>
         /// Asynchronously gets the User for the user id.
         /// </summary>
         /// <param name="userID"></param>

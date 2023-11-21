@@ -57,6 +57,8 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
+                var loggingTask = _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity.UserID, DocumentAction.Read), cancellationToken);
+
                 var entity = await _documentEntityDA.GetDocumentAsync(documentID, cancellationToken);
                 if (entity == null)
                     return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
@@ -67,7 +69,9 @@ namespace BSES.DocumentManagementSystem.Business
                 if (stream == null)
                     return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
                         false, $"Something went wrong while fetching the document from the document path {entity.DocumentPath}");
-
+                
+                loggingTask.Wait();
+                
                 return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create(entity!, stream), true, string.Empty);
             }
             catch (Exception e)

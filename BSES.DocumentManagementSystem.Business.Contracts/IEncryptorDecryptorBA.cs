@@ -18,5 +18,21 @@
         /// <param name="stream"></param>
         /// <returns>Decrypted stream data.</returns>
         Stream Decrypt(Stream stream);
+
+        /// <summary>
+        /// Encrypts the string data based on the companyCode secret key.
+        /// </summary>
+        /// <param name="inputData"></param>
+        /// <param name="companyCode"></param>
+        /// <returns></returns>
+        string Encrypt(string inputData, string companyCode);
+
+        /// <summary>
+        /// Decrypts the encrypted data based on the companyCode secret key.
+        /// </summary>
+        /// <param name="encryptedData"></param>
+        /// <param name="companyCode"></param>
+        /// <returns></returns>
+        string Decrypt(string encryptedData, string companyCode);
     }
 }
