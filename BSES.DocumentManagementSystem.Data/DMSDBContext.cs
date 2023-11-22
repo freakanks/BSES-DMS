@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Oracle.EntityFrameworkCore.Query.Internal;
 using System.Configuration;
 
 namespace BSES.DocumentManagementSystem.Data

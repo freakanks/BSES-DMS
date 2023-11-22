@@ -1,6 +1,7 @@
 ﻿using BSES.DocumentManagementSystem.Business.Contracts;
 using BSES.DocumentManagementSystem.Entities;
 using BSES.DocumentManagementSystem.Entities.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
@@ -8,6 +9,7 @@ namespace BSES.DocumentManagementSystem.Controllers
 {
     [Route("api/DocumentManagement")]
     [ApiController]
+    [Authorize]
     public class DocumentManagementController : ControllerBase
     {
         /// <summary>

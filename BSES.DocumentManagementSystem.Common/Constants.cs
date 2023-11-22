@@ -15,5 +15,8 @@
         //Constants Keys for Tokens.
         public const string TOKEN = "X-CSRF-TOKEN";
 
+        public const string HKEY_BSES_RAJDHANI = "SOFTWARE\\HKEY_BSES_RAJDHANI";
+        public const string DMSEncryptionKey = "DMSEncryptionKey";
+        public const string DMSKeyForIV = "DMSEncryptionIV";
     }
 }

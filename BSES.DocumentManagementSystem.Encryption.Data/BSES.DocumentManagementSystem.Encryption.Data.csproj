@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
+		<PackageReference Include="Oracle.EntityFrameworkCore" Version="7.21.12" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\BSES.DocumentManagementSystem.Encryption.Data.Contracts\BSES.DocumentManagementSystem.Encryption.Data.Contracts.csproj" />
+	</ItemGroup>
+</Project>

@@ -160,3 +160,6 @@
 /BSES.DocumentManagementSystem.Entities.Contracts/obj/Debug/net6.0/BSES.DocumentManagementSystem.Entities.Contracts.pdb
 /BSES.DocumentManagementSystem.Business/bin/Debug/net6.0/BSES.DocumentManagementSystem.Entities.dll
 /BSES.DocumentManagementSystem.Business/bin/Debug/net6.0/BSES.DocumentManagementSystem.Entities.pdb
+/BSES.DocumentManagementSystem.Encryption.Data/obj/Debug/net6.0
+/BSES.DocumentManagementSystem.Encryption.Data/obj
+/BSES.DocumentManagementSystem.Encryption.Data.Contracts/obj

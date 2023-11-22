@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSyst
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Common", "..\BSES.DocumentManagementSystem.Common\BSES.DocumentManagementSystem.Common.csproj", "{1FF32C89-F065-408A-985D-938F7E053DFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSES.DocumentManagementSystem.Data.FileSystem", "..\BSES.DocumentManagementSystem.Data.FileSystem\BSES.DocumentManagementSystem.Data.FileSystem.csproj", "{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Data.FileSystem", "..\BSES.DocumentManagementSystem.Data.FileSystem\BSES.DocumentManagementSystem.Data.FileSystem.csproj", "{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSES.DocumentManagementSystem.Encryption.Data.Contracts", "..\BSES.DocumentManagementSystem.Encryption.Data.Contracts\BSES.DocumentManagementSystem.Encryption.Data.Contracts.csproj", "{230BE591-AFDC-43AD-AE5D-7FFDEB5C9900}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSES.DocumentManagementSystem.Encryption.Data", "..\BSES.DocumentManagementSystem.Encryption.Data\BSES.DocumentManagementSystem.Encryption.Data.csproj", "{2E6748F7-E017-40E6-A187-4D660D718CEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{230BE591-AFDC-43AD-AE5D-7FFDEB5C9900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{230BE591-AFDC-43AD-AE5D-7FFDEB5C9900}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{230BE591-AFDC-43AD-AE5D-7FFDEB5C9900}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{230BE591-AFDC-43AD-AE5D-7FFDEB5C9900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E6748F7-E017-40E6-A187-4D660D718CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E6748F7-E017-40E6-A187-4D660D718CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E6748F7-E017-40E6-A187-4D660D718CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E6748F7-E017-40E6-A187-4D660D718CEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
