@@ -1,8 +1,7 @@
 ﻿using BSES.DocumentManagementSystem.Business.Contracts;
-using BSES.DocumentManagementSystem.Common;
+using BSES.DocumentManagementSystem.Encryption.Data.Contracts;
 using Microsoft.Extensions.Logging;
-using Microsoft.Win32;
-using System.Collections.Concurrent;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -14,12 +13,12 @@ namespace BSES.DocumentManagementSystem.Business
         /// <summary>
         /// Local dictionary to keep hold of all the encryption keys for companies.
         /// </summary>
-        private ConcurrentDictionary<string, string> _encryptionKeys = new ConcurrentDictionary<string, string>();
+        private IDictionary<string, string> _encryptionKeys;
 
         /// <summary>
         /// Local dictionary to keep hold of all the encryption IV for companies.
         /// </summary>
-        private ConcurrentDictionary<string, string> _IV = new ConcurrentDictionary<string, string>();
+        private IDictionary<string, string> _IV;
 
         /// <summary>
         /// Readonly instance for logger.
@@ -27,26 +26,34 @@ namespace BSES.DocumentManagementSystem.Business
         private readonly ILogger<EncryptorDecryptorBA> _logger;
 
         /// <summary>
-        /// Gets or read 
+        /// Reads the encryption keys for a company code.
         /// </summary>
         /// <param name="companyCode"></param>
         /// <returns></returns>
         private string ReadEncryptionKey(string companyCode) =>
-                    _encryptionKeys.GetOrAdd(companyCode, (companyCode) =>
-                                 Convert.ToString(Registry.LocalMachine.OpenSubKey($"{DMSConstants.HKEY_BSES_RAJDHANI}\\{companyCode}").GetValue(DMSConstants.DMSEncryptionKey))
-                    );
+                    _encryptionKeys.TryGetValue(companyCode, out string? value) && !string.IsNullOrEmpty(value) ? value :
+                    throw new KeyNotFoundException($"Encryption Key not found for the Company Code {companyCode}");
 
+        /// <summary>
+        /// Reads the encryption key IV for a company code.
+        /// </summary>
+        /// <param name="companyCode"></param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException"></exception>
         private string ReadIVKey(string companyCode) =>
-                    _IV.GetOrAdd(companyCode, (companyCode) => $"{DMSConstants.HKEY_BSES_RAJDHANI}\\{companyCode}\\{DMSConstants.DMSEncryptionKey}");
+                    _IV.TryGetValue(companyCode, out string? value) && !string.IsNullOrEmpty(value) ? value :
+                    throw new KeyNotFoundException($"Encryption Key IV not found for the Company Code {companyCode}");
 
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         /// <param name="logger"></param>
-        public EncryptorDecryptorBA(ILogger<EncryptorDecryptorBA> logger)
+        public EncryptorDecryptorBA(ILogger<EncryptorDecryptorBA> logger, ISharedEncryptionKeysDA encryptionKeysDA)
         {
             _logger = logger;
+            _encryptionKeys = encryptionKeysDA.GetAllEncryptionKeysAsync(default).Result;
+            _IV = encryptionKeysDA.GetAllEncryptionIVKeysAsync(default).Result;
         }
 
         public Task<Stream> EncryptAsync(Stream stream, CancellationToken cancellationToken)
@@ -61,8 +68,8 @@ namespace BSES.DocumentManagementSystem.Business
 
         public async Task<string> EncryptAsync(string inputData, string companyCode, CancellationToken cancellationToken)
         {
-            byte[] aesKey = new byte[16];
-            byte[] aesIV = new byte[16];
+            byte[] aesKey = Encoding.ASCII.GetBytes(ReadEncryptionKey(companyCode));
+            byte[] aesIV = Encoding.ASCII.GetBytes(ReadIVKey(companyCode));
 
             using var aesManaged = new AesManaged()
             {
@@ -84,8 +91,8 @@ namespace BSES.DocumentManagementSystem.Business
 
         public async Task<string> DecryptAsync(string encryptedData, string companyCode, CancellationToken cancellationToken)
         {
-            byte[] aesKey = new byte[16];
-            byte[] aesIV = new byte[16];
+            byte[] aesKey = Encoding.ASCII.GetBytes(ReadEncryptionKey(companyCode));
+            byte[] aesIV = Encoding.ASCII.GetBytes(ReadIVKey(companyCode));
 
             using var aesManaged = new AesManaged()
             {
@@ -102,9 +109,5 @@ namespace BSES.DocumentManagementSystem.Business
             using var streamReader = new StreamReader(cryptoStream);
             return await streamReader.ReadToEndAsync();
         }
-
-
-
-
     }
 }

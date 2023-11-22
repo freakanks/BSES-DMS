@@ -2,6 +2,7 @@ using BSES.DocumentManagementSystem;
 using BSES.DocumentManagementSystem.Business;
 using BSES.DocumentManagementSystem.Data;
 using BSES.DocumentManagementSystem.Data.FileSystem;
+using BSES.DocumentManagementSystem.Encryption.Data;
 using Serilog;
 
 
@@ -30,6 +31,7 @@ builder.Services.AddJWT(builder.Configuration)
                 .AddHttpContextAccessor()
                 .AddDataServicesFileSystem()
                 .AddDataServicesDB()
+                .AddEncryptionDataServices()
                 .AddBusinessServices();
 
 builder.Host.UseSerilog((context, serviceProvider, loggerConfiguration) =>

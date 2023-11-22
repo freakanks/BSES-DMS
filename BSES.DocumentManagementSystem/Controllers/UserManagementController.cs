@@ -92,7 +92,7 @@ namespace BSES.DocumentManagementSystem.Controllers
         {
             try
             {
-                string decryptedData = _encryptionService.Decrypt(userModel.Credentials, userModel.CompanyCode);
+                string decryptedData = await _encryptionService.DecryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
                 string[] userData = decryptedData.Split(DMSConstants.DATA_DELIMITER);
                 if (userData.Length < 3)
                     return new BadRequestObjectResult($"Invalid credentials passed for the system.");

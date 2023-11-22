@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BSES.DocumentManagementSystem.Business.Contracts\BSES.DocumentManagementSystem.Business.Contracts.csproj" />
     <ProjectReference Include="..\BSES.DocumentManagementSystem.Data.Contracts\BSES.DocumentManagementSystem.Data.Contracts.csproj" />
+    <ProjectReference Include="..\BSES.DocumentManagementSystem.Encryption.Data.Contracts\BSES.DocumentManagementSystem.Encryption.Data.Contracts.csproj" />
     <ProjectReference Include="..\BSES.DocumentManagementSystem.Entities.Contracts\BSES.DocumentManagementSystem.Entities.Contracts.csproj" />
     <ProjectReference Include="..\BSES.DocumentManagementSystem.Entities\BSES.DocumentManagementSystem.Entities.csproj" />
   </ItemGroup>
