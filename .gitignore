@@ -163,3 +163,8 @@
 /BSES.DocumentManagementSystem.Encryption.Data/obj/Debug/net6.0
 /BSES.DocumentManagementSystem.Encryption.Data/obj
 /BSES.DocumentManagementSystem.Encryption.Data.Contracts/obj
+/BSES.DocumentManagementSystem.Business/bin/Debug/net6.0
+/BSES.DocumentManagementSystem.Data/obj/Debug/net6.0
+/BSES.DocumentManagementSystem.Data.FileSystem/obj/Debug/net6.0
+/BSES.DocumentManagementSystem.Encryption.Data/bin/Debug/net6.0
+/BSES.DocumentManagementSystem.Encryption.Data.Contracts/bin/Debug/net6.0
