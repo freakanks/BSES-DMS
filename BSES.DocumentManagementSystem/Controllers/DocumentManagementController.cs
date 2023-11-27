@@ -9,7 +9,7 @@ namespace BSES.DocumentManagementSystem.Controllers
 {
     [Route("api/DocumentManagement")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DocumentManagementController : ControllerBase
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace BSES.DocumentManagementSystem.Controllers
         private IDocumentEntity GetDocumentEntity(DocumentModel model) => new DocumentEntity()
         {
             Category = model.DocumentCategory,
-            DocumentName = model.DocumentName,
+            DocumentName = $"{model.DocumentName}{Path.GetExtension(model.FileInfo!.FileName)}",
             DocumentAccessScope = model.DocumentAccessScope
         };
 
@@ -45,7 +45,7 @@ namespace BSES.DocumentManagementSystem.Controllers
             _documentManagementBA = documentManagementBA;
         }
 
-        [HttpGet("GetDocument")]
+        [HttpGet("GetDocument/{documentID}")]
         /// <summary>
         /// Asynchronously returns the document with the unique document ID.
         /// </summary>
@@ -61,9 +61,12 @@ namespace BSES.DocumentManagementSystem.Controllers
                 if (result == null || !result.IsSuccess)
                     return new OkObjectResult(result?.ErrorMessage ?? "Something went wrong while getting the document.");
 
-                using var stream = result.Value.Item2;
+                var stream = result.Value.Item2;
                 byte[] buffer = new byte[stream.Length];
-                await stream.ReadAsync(buffer);
+                
+                await stream.ReadAsync(buffer);                
+                await stream.DisposeAsync();
+                
                 return new FileContentResult(buffer, new FileExtensionContentTypeProvider().TryGetContentType(result.Value.Item1.DocumentName, out string? contentType) ? contentType : "application/octet-stream");
 
             }
@@ -81,11 +84,11 @@ namespace BSES.DocumentManagementSystem.Controllers
         /// <param name="documentModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Unique Document ID for the saved document stream.</returns>
-        public async Task<IActionResult> SaveDocumentAsync(DocumentModel documentModel, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> SaveDocumentAsync([FromForm] DocumentModel documentModel, CancellationToken cancellationToken = default)
         {
             try
             {
-                var result = await _documentManagementBA.SaveDocumentAsync(GetDocumentEntity(documentModel), documentModel.DocumentStream, cancellationToken);
+                var result = await _documentManagementBA.SaveDocumentAsync(GetDocumentEntity(documentModel), documentModel.FileInfo!.OpenReadStream(), cancellationToken);
                 if (result == null || !result.IsSuccess)
                     return new BadRequestObjectResult($"Something went wrong while saving the document with name {documentModel?.DocumentName ?? string.Empty}. The error is {result?.ErrorMessage ?? string.Empty}");
 

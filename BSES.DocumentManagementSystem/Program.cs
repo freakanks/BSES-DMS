@@ -30,7 +30,7 @@ builder.Services.AddJWT(builder.Configuration)
                 .AddSession()
                 .AddHttpContextAccessor()
                 .AddDataServicesFileSystem()
-                .AddDataServicesDB()
+                .AddDataServicesDB(builder.Configuration)
                 .AddEncryptionDataServices()
                 .AddBusinessServices();
 

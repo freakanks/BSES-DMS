@@ -68,8 +68,8 @@ namespace BSES.DocumentManagementSystem.Business
 
         public async Task<string> EncryptAsync(string inputData, string companyCode, CancellationToken cancellationToken)
         {
-            byte[] aesKey = Encoding.ASCII.GetBytes(ReadEncryptionKey(companyCode));
-            byte[] aesIV = Encoding.ASCII.GetBytes(ReadIVKey(companyCode));
+            byte[] aesKey = Convert.FromBase64String(ReadEncryptionKey(companyCode));
+            byte[] aesIV = Convert.FromBase64String(ReadIVKey(companyCode));
 
             using var aesManaged = new AesManaged()
             {
@@ -91,8 +91,8 @@ namespace BSES.DocumentManagementSystem.Business
 
         public async Task<string> DecryptAsync(string encryptedData, string companyCode, CancellationToken cancellationToken)
         {
-            byte[] aesKey = Encoding.ASCII.GetBytes(ReadEncryptionKey(companyCode));
-            byte[] aesIV = Encoding.ASCII.GetBytes(ReadIVKey(companyCode));
+            byte[] aesKey = Convert.FromBase64String(ReadEncryptionKey(companyCode));
+            byte[] aesIV = Convert.FromBase64String(ReadIVKey(companyCode));
 
             using var aesManaged = new AesManaged()
             {

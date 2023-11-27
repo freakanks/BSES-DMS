@@ -57,7 +57,7 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
-                var loggingTask = _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity.UserID, DocumentAction.Read), cancellationToken);
+                var loggingTask = _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity?.UserID ?? "0", DocumentAction.Read), cancellationToken);
 
                 var entity = await _documentEntityDA.GetDocumentAsync(documentID, cancellationToken);
                 if (entity == null)
@@ -87,7 +87,7 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
-                documentEntity.DocumentPath = await _documentDA.SaveDocumentAsync(documentEntity.DocumentPath, documentStream, cancellationToken);
+                documentEntity.DocumentPath = await _documentDA.SaveDocumentAsync(documentEntity.DocumentName, documentStream, cancellationToken);
 
                 if (string.IsNullOrEmpty(documentEntity.DocumentPath))
                     return new Result<string>(string.Empty, false, $"Something went wrong while saving the document stream for document name {documentEntity.DocumentName}.");
@@ -98,7 +98,7 @@ namespace BSES.DocumentManagementSystem.Business
                 if (entity == null)
                     return new Result<string>(string.Empty, false, $"Something went wrong while saving the document entity record.");
 
-                await _documentLogEntityDA.SaveDocumentLogAsync(documentEntity.DocumentID, new DocumentLogEntity(documentEntity.DocumentID, _userEntity.UserID, DocumentAction.Write), cancellationToken);
+                await _documentLogEntityDA.SaveDocumentLogAsync(documentEntity.DocumentID, new DocumentLogEntity(documentEntity.DocumentID, _userEntity?.UserID ?? "0", DocumentAction.Write), cancellationToken);
 
                 return new Result<string>(documentEntity.DocumentID, true, string.Empty);
             }

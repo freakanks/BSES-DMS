@@ -32,7 +32,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
         public DocumentDA(ILogger<DocumentDA> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
-            ReadOnlySpan<char> companyCode = httpContextAccessor?.HttpContext?.Session?.Get<IDocumentUserEntity>(DMSConstants.USER_SESSION_DATA)?.CompanyCode;
+            ReadOnlySpan<char> companyCode = "BRPL"; //httpContextAccessor?.HttpContext?.Session?.Get<IDocumentUserEntity>(DMSConstants.USER_SESSION_DATA)?.CompanyCode;
             _basePathForStorage = configuration.GetRequiredSection($"BasePathForStorage{companyCode}").Value ?? throw new Exception($"Base Path for storage is not defined in configuration.");
             _retrialCount = int.TryParse(configuration.GetRequiredSection("RetryCount").Value, out int value) ? value : 1;
         }
@@ -49,7 +49,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
                         return null;
 
                     using var fileStream = new FileStream(documentPath, FileMode.Open, FileAccess.Read);
-                    using var stream = new MemoryStream(new byte[fileStream.Length]);
+                    var stream = new MemoryStream(new byte[fileStream.Length]);
                     await fileStream.CopyToAsync(stream);
 
                     return stream;
@@ -90,7 +90,12 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
             {
                 try
                 {
-                    string filepath = Path.Combine(_basePathForStorage, $"{DateTime.Today.Year}", $"{DateTime.Today.Month}", documentName);
+                    var storageDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _basePathForStorage, $"{DateTime.Today.Year}", $"{DateTime.Today.Month}");
+                    if (!Directory.Exists(storageDirectory))
+                        Directory.CreateDirectory(storageDirectory);
+
+                    string filepath = Path.Combine(storageDirectory, documentName);
+
                     using var fileStream = new FileStream(filepath, FileMode.Create, FileAccess.Write);
                     await documentStream.CopyToAsync(fileStream, cancellationToken);
 

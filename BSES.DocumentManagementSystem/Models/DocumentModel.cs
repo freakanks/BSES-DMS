@@ -10,8 +10,7 @@ namespace BSES.DocumentManagementSystem
         public string? DocumentName { get; set; }
 
         [Required(ErrorMessage = "Cannot process blank stream of data.")]
-        public Stream? DocumentStream { get; set; }
-
+        public IFormFile? FileInfo { get; set; }
         public DocumentAccessScope DocumentAccessScope { get; set; } = DocumentAccessScope.Internal;
         public DocumentCategory DocumentCategory { get; set; } = DocumentCategory.KYC;
     }

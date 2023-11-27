@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSyst
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Data.FileSystem", "..\BSES.DocumentManagementSystem.Data.FileSystem\BSES.DocumentManagementSystem.Data.FileSystem.csproj", "{A37B5E44-5F25-4DB3-8DF8-78FBA0B7A8CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSES.DocumentManagementSystem.Encryption.Data.Contracts", "..\BSES.DocumentManagementSystem.Encryption.Data.Contracts\BSES.DocumentManagementSystem.Encryption.Data.Contracts.csproj", "{230BE591-AFDC-43AD-AE5D-7FFDEB5C9900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Encryption.Data.Contracts", "..\BSES.DocumentManagementSystem.Encryption.Data.Contracts\BSES.DocumentManagementSystem.Encryption.Data.Contracts.csproj", "{230BE591-AFDC-43AD-AE5D-7FFDEB5C9900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSES.DocumentManagementSystem.Encryption.Data", "..\BSES.DocumentManagementSystem.Encryption.Data\BSES.DocumentManagementSystem.Encryption.Data.csproj", "{2E6748F7-E017-40E6-A187-4D660D718CEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSES.DocumentManagementSystem.Encryption.Data", "..\BSES.DocumentManagementSystem.Encryption.Data\BSES.DocumentManagementSystem.Encryption.Data.csproj", "{2E6748F7-E017-40E6-A187-4D660D718CEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
