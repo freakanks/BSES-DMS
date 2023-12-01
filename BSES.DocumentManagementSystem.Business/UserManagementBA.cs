@@ -29,11 +29,11 @@ namespace BSES.DocumentManagementSystem.Business
             _userEntityDA = userEntityDA;
         }
 
-        public async Task<IDocumentUserEntity?> AuthenticateDocumentUserAsync(string userName, string secretKey, CancellationToken cancellationToken)
+        public async Task<IDocumentUserEntity?> AuthenticateDocumentUserAsync(string companyCode, string userName, string secretKey, CancellationToken cancellationToken)
         {
             try
             {
-                return await _userEntityDA.AuthenticateUserAsync(userName, secretKey, cancellationToken);
+                return await _userEntityDA.AuthenticateUserAsync(companyCode, userName, secretKey, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -61,9 +61,9 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
-               return await _userEntityDA.SaveAsync(userEntity, cancellationToken);
+                return await _userEntityDA.SaveAsync(userEntity, cancellationToken);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"{ex}");
             }

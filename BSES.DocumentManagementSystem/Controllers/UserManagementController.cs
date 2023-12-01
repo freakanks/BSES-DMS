@@ -22,33 +22,27 @@ namespace BSES.DocumentManagementSystem.Controllers
         {
             var issuer = _configuration.GetValue<string>(DMSConstants.JWT_ISSUER_CONFIG_KEY);
             var audience = _configuration.GetValue<string>(DMSConstants.JWT_AUDIENCE_CONFIG_KEY);
-            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>(DMSConstants.JWT_SECRET_KEY_CONFIG_KEY)!);
+            var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>(DMSConstants.JWT_SECRET_KEY_CONFIG_KEY)!);
 
             var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature);
 
-            var subject = new ClaimsIdentity(new[]
+            var claims = new []
             {
+                new Claim(ClaimTypes.NameIdentifier, $"{userName}"),
+                new Claim(ClaimTypes.Authentication, "true"),
                 new Claim(JwtRegisteredClaimNames.Sub, $"{userName}")
-            });
+            };
             var expires = DateTime.Now.AddHours(2);
 
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Subject = subject,
-                SigningCredentials = signinCredentials,
-                Issuer = issuer,
-                Audience = audience,
-                Expires = expires
-            };
+            var token = new JwtSecurityToken(issuer, audience, claims, expires: expires, signingCredentials: signinCredentials);
+           
             var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
             return tokenHandler.WriteToken(token);
         }
         /// <summary>
         /// Local instance for the Encryption/Decryption.
         /// </summary>
-        private readonly IEncryptorDecryptorBA _encryptionService;
+        //private readonly IEncryptorDecryptorBA _encryptionService;
         /// <summary>
         /// Internal Logger for this class instance.
         /// </summary>
@@ -71,11 +65,11 @@ namespace BSES.DocumentManagementSystem.Controllers
         /// <param name="userManagementBA"></param> 
         /// <param name="encryptionService"></param>
         /// <param name="configuration"></param>
-        public UserManagementController(ILogger<UserManagementController> logger, IUserManagementBA userManagementBA, IEncryptorDecryptorBA encryptionService, IConfiguration configuration)
+        public UserManagementController(ILogger<UserManagementController> logger, IUserManagementBA userManagementBA, IConfiguration configuration) //IEncryptorDecryptorBA encryptionService,,)
         {
             _logger = logger;
             _userManagementBA = userManagementBA;
-            _encryptionService = encryptionService;
+            //_encryptionService = encryptionService;
             _configuration = configuration;
         }
 
@@ -92,13 +86,13 @@ namespace BSES.DocumentManagementSystem.Controllers
         {
             try
             {
-                string decryptedData = await _encryptionService.DecryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
+                string decryptedData = userModel.Credentials; //await _encryptionService.DecryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
                 string[] userData = decryptedData.Split(DMSConstants.DATA_DELIMITER);
-                if (userData.Length < 3)
+                if (userData.Length < 2)
                     return new BadRequestObjectResult($"Invalid credentials passed for the system.");
 
-                var userEntity = await _userManagementBA.AuthenticateDocumentUserAsync(userData[0], userData[1], cancellationToken);
-                if (userEntity?.IsAuthenticated ?? true)
+                var userEntity = await _userManagementBA.AuthenticateDocumentUserAsync(userModel.CompanyCode, userData[0], userData[1], cancellationToken);
+                if (userEntity == null || !userEntity.IsAuthenticated)
                     return new BadRequestObjectResult($"Invalid credentials passed for the system.");
 
                 string token = GetNewToken(userData[0]);
@@ -110,6 +104,20 @@ namespace BSES.DocumentManagementSystem.Controllers
                 _logger.LogError($"{ex}");
             }
             return new BadRequestObjectResult("Something went wrong while getting the Token. Kindly get in touch with System Administrator.");
+        }
+
+        [HttpPost("CreateUser")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserModel userModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"{e}");
+            }
+            return new BadRequestObjectResult($"Something went wrong while creating the new user with username {userModel.UserName} for company {userModel.CompanyCode}. Kindly get in touch with System Administrator.");
         }
     }
 }

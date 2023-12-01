@@ -94,9 +94,9 @@ namespace BSES.DocumentManagementSystem.Data
             return ModelToUserEntity(user);
         }
 
-        public async Task<IDocumentUserEntity?> AuthenticateUserAsync(string userID, string secretKey, CancellationToken cancellationToken)
+        public async Task<IDocumentUserEntity?> AuthenticateUserAsync(string companyCode, string userName, string secretKey, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.Where(x => x.UserID == userID).FirstOrDefaultAsync(cancellationToken);
+            var user = await _context.Users.Where(x => x.CompanyCode.ToUpper() == companyCode.ToUpper() && x.UserName.ToUpper() == userName.ToUpper()).FirstOrDefaultAsync(cancellationToken);
             return ModelToUserEntity(user, user?.SecretKey == secretKey);
         }
     }

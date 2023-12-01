@@ -30,6 +30,6 @@ namespace BSES.DocumentManagementSystem.Business.Contracts
         /// <param name="secretKey"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IDocumentUserEntity?> AuthenticateDocumentUserAsync(string userName, string secretKey, CancellationToken cancellationToken);
+        Task<IDocumentUserEntity?> AuthenticateDocumentUserAsync(string companyCode, string userName, string secretKey, CancellationToken cancellationToken);
     }
 }

@@ -23,5 +23,13 @@ namespace BSES.DocumentManagementSystem.Business.Contracts
         /// <param name="cancellationToken"></param>
         /// <returns>Unique ID for the document.</returns>
         Task<Result<string>> SaveDocumentAsync(IDocumentEntity documentEntity, Stream documentStream, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Removes the doucment physically from the drive and mark the database entry for the file as InActive.
+        /// </summary>
+        /// <param name="documentID"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<bool>> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken);
     }
 }

@@ -9,7 +9,7 @@ namespace BSES.DocumentManagementSystem.Controllers
 {
     [Route("api/DocumentManagement")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class DocumentManagementController : ControllerBase
     {
         /// <summary>
@@ -61,13 +61,9 @@ namespace BSES.DocumentManagementSystem.Controllers
                 if (result == null || !result.IsSuccess)
                     return new OkObjectResult(result?.ErrorMessage ?? "Something went wrong while getting the document.");
 
-                var stream = result.Value.Item2;
-                byte[] buffer = new byte[stream.Length];
-                
-                await stream.ReadAsync(buffer);                
-                await stream.DisposeAsync();
-                
-                return new FileContentResult(buffer, new FileExtensionContentTypeProvider().TryGetContentType(result.Value.Item1.DocumentName, out string? contentType) ? contentType : "application/octet-stream");
+                var stream = result.Value.Item2;             
+
+                return new FileStreamResult(stream, new FileExtensionContentTypeProvider().TryGetContentType(result.Value.Item1.DocumentName, out string? contentType) ? contentType : "application/octet-stream");
 
             }
             catch (Exception e)
@@ -101,5 +97,23 @@ namespace BSES.DocumentManagementSystem.Controllers
             }
         }
 
+        [HttpPost("RemoveDocument")]
+        public async Task<IActionResult> RemoveDocumentAsync([FromBody]string documentID, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var result = await _documentManagementBA.RemoveDocumentAsync(documentID, cancellationToken);
+
+                if (result == null || !result.Value)
+                    return new BadRequestObjectResult(result?.ErrorMessage ?? "Something went wrong while removing the document.");
+                return new OkResult();
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"{e}");
+                return new BadRequestObjectResult($"Something went wrong while removing the document for id {documentID}");
+            }
+        }
     }
 }

@@ -48,11 +48,8 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
                     if (!File.Exists(documentPath))
                         return null;
 
-                    using var fileStream = new FileStream(documentPath, FileMode.Open, FileAccess.Read);
-                    var stream = new MemoryStream(new byte[fileStream.Length]);
-                    await fileStream.CopyToAsync(stream);
-
-                    return stream;
+                    var fileStream = new FileStream(documentPath, FileMode.Open, FileAccess.Read);
+                    return fileStream;
                 }
                 catch (Exception e)
                 {

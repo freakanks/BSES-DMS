@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BSES.DocumentManagementSystem.Entities.Contracts
+﻿namespace BSES.DocumentManagementSystem.Entities.Contracts
 {
     public interface IBaseEntity
     {
@@ -16,8 +10,8 @@ namespace BSES.DocumentManagementSystem.Entities.Contracts
     }
     public enum RecordStatusCode
     {
-        Active,
         InActive,
+        Active,
         Deleted
     }
 }

@@ -37,7 +37,7 @@ namespace BSES.DocumentManagementSystem.Data.Contracts
         /// <param name="documentID"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Success/Failure</returns>
-        Task<bool> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken);
+        Task<IDocumentEntity> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken);
 
         /// <summary>
         /// Asynchronously updates the document information by creating a new record with new version.

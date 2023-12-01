@@ -57,10 +57,14 @@ namespace BSES.DocumentManagementSystem.Data
             return DocumentModelToEntity(document);
         }
 
-        public async Task<bool> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken)
+        public async Task<IDocumentEntity?> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken)
         {
-            await _context.Documents.Where(x => x.DocumentID == documentID).ExecuteDeleteAsync(cancellationToken);
-            return (await _context.SaveChangesAsync(cancellationToken)) > 0;
+            var document = await _context.Documents.Where(x => x.DocumentID == documentID).FirstOrDefaultAsync(cancellationToken);
+            if (document == null) return null;
+            document.RecordStatusCode = (int)RecordStatusCode.InActive;
+            document.UpdatedDateTime = DateTime.Now;
+            await _context.SaveChangesAsync(cancellationToken);
+            return DocumentModelToEntity(document);
         }
 
         public async Task<IEnumerable<IDocumentEntity>> SaveAllDocumentsAsync(IEnumerable<IDocumentEntity> documents, CancellationToken cancellationToken)

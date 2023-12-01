@@ -3,6 +3,7 @@ using BSES.DocumentManagementSystem.Business;
 using BSES.DocumentManagementSystem.Data;
 using BSES.DocumentManagementSystem.Data.FileSystem;
 using BSES.DocumentManagementSystem.Encryption.Data;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 
@@ -16,19 +17,42 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(options =>
 {
     options.UseInlineDefinitionsForEnums();
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+    options.SwaggerDoc("v1", new OpenApiInfo()
     {
         Title = "DMS API",
         Description = "This is the DMS application which will serve as a common Document Storage point for all the internal applications by the BSES team.",
         Version = "v1"
     });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization Header using the Bearer scheme. \r\n\r\n",
+        
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            new string[] {}
+        }
+    }); 
 });
 
 ///DMS Services Registration.
-builder.Services.AddJWT(builder.Configuration)
-                .AddDistributedMemoryCache()
+builder.Services.AddDistributedMemoryCache()
                 .AddSession()
                 .AddHttpContextAccessor()
+                .AddJWT(builder.Configuration)
                 .AddDataServicesFileSystem()
                 .AddDataServicesDB(builder.Configuration)
                 .AddEncryptionDataServices()
@@ -46,9 +70,9 @@ builder.Host.UseSerilog((context, serviceProvider, loggerConfiguration) =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
+app.UseMiddleware<HandleExceptionMiddleware>();
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapControllers();

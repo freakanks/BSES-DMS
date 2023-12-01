@@ -57,7 +57,7 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
-                var loggingTask = _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity?.UserID ?? "0", DocumentAction.Read), cancellationToken);
+                await _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity?.UserID ?? "0", DocumentAction.Read), cancellationToken);
 
                 var entity = await _documentEntityDA.GetDocumentAsync(documentID, cancellationToken);
                 if (entity == null)
@@ -69,9 +69,8 @@ namespace BSES.DocumentManagementSystem.Business
                 if (stream == null)
                     return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
                         false, $"Something went wrong while fetching the document from the document path {entity.DocumentPath}");
-                
-                loggingTask.Wait();
-                
+
+
                 return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create(entity!, stream), true, string.Empty);
             }
             catch (Exception e)
@@ -80,6 +79,31 @@ namespace BSES.DocumentManagementSystem.Business
             }
             return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
                         false, $"Something went wrong while fetching the document with document id {documentID}");
+        }
+
+        ///<inheritdoc/>
+        public async Task<Result<bool>> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity?.UserID ?? "0", DocumentAction.Delete), cancellationToken);
+
+                var entity = await _documentEntityDA.RemoveDocumentAsync(documentID, cancellationToken);
+                if (entity == null)
+                    return new Result<bool>(false, false, $"Something went wrong while removing the document entity for the document id {documentID}");
+
+                var removeResult = _documentDA.RemoveDocumentAsync(entity.DocumentPath, cancellationToken);
+
+                if (!removeResult)
+                    return new Result<bool>(false, false, $"Something went wrong while removing the document from the document path {entity.DocumentPath}");
+
+                return new Result<bool>(true, true, string.Empty);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"{e}");
+            }
+            return new Result<bool>(false, false, $"Something went wrong while removing the document with document id {documentID}");
         }
 
         ///<inheritdoc/>
