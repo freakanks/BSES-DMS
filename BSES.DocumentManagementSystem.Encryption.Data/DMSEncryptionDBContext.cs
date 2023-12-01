@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 
 namespace BSES.DocumentManagementSystem.Encryption.Data
 {
     public class DMSEncryptionDBContext : DbContext
     {
+        public DMSEncryptionDBContext(DbContextOptions<DMSEncryptionDBContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DMSEncryptionKey>().HasData(new DMSEncryptionKey[]
@@ -14,9 +14,10 @@ namespace BSES.DocumentManagementSystem.Encryption.Data
             });
             base.OnModelCreating(modelBuilder);
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            optionsBuilder.UseOracle(ConfigurationManager.ConnectionStrings["DMS_DATABASE"].ConnectionString);
+            //options.UseOracle(configuration.GetConnectionString("DMS_DATABASE"));
+            //options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DMSApplication;Integrated Security=True;Connection Timeout=15;MultipleActiveResultSets=true");
         }
 
         public DbSet<DMSEncryptionKey> DMSEncryptionKeys { get; set; }

@@ -55,7 +55,7 @@ builder.Services.AddDistributedMemoryCache()
                 .AddJWT(builder.Configuration)
                 .AddDataServicesFileSystem()
                 .AddDataServicesDB(builder.Configuration)
-                .AddEncryptionDataServices()
+                .AddEncryptionDataServices(builder.Configuration)
                 .AddBusinessServices();
 
 builder.Host.UseSerilog((context, serviceProvider, loggerConfiguration) =>

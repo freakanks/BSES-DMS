@@ -31,7 +31,7 @@ namespace BSES.DocumentManagementSystem.Business
         /// <param name="companyCode"></param>
         /// <returns></returns>
         private string ReadEncryptionKey(string companyCode) =>
-                    _encryptionKeys.TryGetValue(companyCode, out string? value) && !string.IsNullOrEmpty(value) ? value :
+                    _encryptionKeys.TryGetValue(companyCode.ToUpper(), out string? value) && !string.IsNullOrEmpty(value) ? value :
                     throw new KeyNotFoundException($"Encryption Key not found for the Company Code {companyCode}");
 
         /// <summary>
@@ -41,9 +41,29 @@ namespace BSES.DocumentManagementSystem.Business
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException"></exception>
         private string ReadIVKey(string companyCode) =>
-                    _IV.TryGetValue(companyCode, out string? value) && !string.IsNullOrEmpty(value) ? value :
+                    _IV.TryGetValue(companyCode.ToUpper(), out string? value) && !string.IsNullOrEmpty(value) ? value :
                     throw new KeyNotFoundException($"Encryption Key IV not found for the Company Code {companyCode}");
+        
+        /// <summary>
+        /// Returns a new instance of AESManaged.
+        /// </summary>
+        /// <param name="companyCode"></param>
+        /// <returns></returns>
+        private AesManaged GetAesManaged(string companyCode)
+        {
+            byte[] aesKey = Convert.FromBase64String(ReadEncryptionKey(companyCode));
+            byte[] aesIV = Convert.FromBase64String(ReadIVKey(companyCode));
 
+            return new AesManaged()
+            {
+                BlockSize = 128,
+                Padding = PaddingMode.PKCS7,
+                Mode = CipherMode.CBC,
+                KeySize = 256,
+                Key = aesKey,
+                IV = aesIV
+            };
+        }
 
         /// <summary>
         /// Default constructor.
@@ -68,43 +88,31 @@ namespace BSES.DocumentManagementSystem.Business
 
         public async Task<string> EncryptAsync(string inputData, string companyCode, CancellationToken cancellationToken)
         {
-            byte[] aesKey = Convert.FromBase64String(ReadEncryptionKey(companyCode));
-            byte[] aesIV = Convert.FromBase64String(ReadIVKey(companyCode));
+            byte[] dataBytes = Encoding.UTF8.GetBytes(inputData);
 
-            using var aesManaged = new AesManaged()
+            using var aesManaged = GetAesManaged(companyCode);
+            ICryptoTransform encryptor = aesManaged.CreateEncryptor();
+
+            int blockSize = aesManaged.BlockSize / 8;
+            int padding = blockSize - (dataBytes.Length % blockSize);
+            byte[] paddedData = new byte[dataBytes.Length + padding];
+            Buffer.BlockCopy(dataBytes, 0, paddedData, 0, dataBytes.Length);
+            for (int i = dataBytes.Length; i < paddedData.Length; i++)
             {
-                BlockSize = 128,
-                Padding = PaddingMode.Zeros,
-                Mode = CipherMode.CBC,
-                KeySize = 256,
-                Key = aesKey,
-                IV = aesIV
-            };
-            ICryptoTransform encryptor = aesManaged.CreateEncryptor(aesKey, aesIV);
+                paddedData[i] = (byte)padding;
+            }
+
             using var ms = new MemoryStream();
             using var cryptoStream = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
-            await cryptoStream.WriteAsync(Encoding.UTF8.GetBytes(inputData), cancellationToken);
-
-            using var streamReader = new StreamReader(ms);
-            return await streamReader.ReadToEndAsync();
+            await cryptoStream.WriteAsync(paddedData, cancellationToken);
+            return Convert.ToBase64String(ms.ToArray());
         }
 
         public async Task<string> DecryptAsync(string encryptedData, string companyCode, CancellationToken cancellationToken)
         {
-            byte[] aesKey = Convert.FromBase64String(ReadEncryptionKey(companyCode));
-            byte[] aesIV = Convert.FromBase64String(ReadIVKey(companyCode));
-
-            using var aesManaged = new AesManaged()
-            {
-                BlockSize = 128,
-                Padding = PaddingMode.Zeros,
-                Mode = CipherMode.CBC,
-                KeySize = 256,
-                Key = aesKey,
-                IV = aesIV
-            };
-            ICryptoTransform decryptor = aesManaged.CreateDecryptor(aesKey, aesIV);
-            using var ms = new MemoryStream(Encoding.UTF8.GetBytes(encryptedData));
+            using var aesManaged = GetAesManaged(companyCode);
+            ICryptoTransform decryptor = aesManaged.CreateDecryptor();
+            using var ms = new MemoryStream(Convert.FromBase64String(encryptedData));
             using var cryptoStream = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
             using var streamReader = new StreamReader(cryptoStream);
             return await streamReader.ReadToEndAsync();

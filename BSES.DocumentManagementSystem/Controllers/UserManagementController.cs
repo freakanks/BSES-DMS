@@ -26,7 +26,7 @@ namespace BSES.DocumentManagementSystem.Controllers
 
             var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature);
 
-            var claims = new []
+            var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, $"{userName}"),
                 new Claim(ClaimTypes.Authentication, "true"),
@@ -35,14 +35,14 @@ namespace BSES.DocumentManagementSystem.Controllers
             var expires = DateTime.Now.AddHours(2);
 
             var token = new JwtSecurityToken(issuer, audience, claims, expires: expires, signingCredentials: signinCredentials);
-           
+
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
         }
         /// <summary>
         /// Local instance for the Encryption/Decryption.
         /// </summary>
-        //private readonly IEncryptorDecryptorBA _encryptionService;
+        private readonly IEncryptorDecryptorBA _encryptionService;
         /// <summary>
         /// Internal Logger for this class instance.
         /// </summary>
@@ -65,12 +65,13 @@ namespace BSES.DocumentManagementSystem.Controllers
         /// <param name="userManagementBA"></param> 
         /// <param name="encryptionService"></param>
         /// <param name="configuration"></param>
-        public UserManagementController(ILogger<UserManagementController> logger, IUserManagementBA userManagementBA, IConfiguration configuration) //IEncryptorDecryptorBA encryptionService,,)
+        public UserManagementController(ILogger<UserManagementController> logger, IUserManagementBA userManagementBA, IConfiguration configuration, IEncryptorDecryptorBA encryptionService)
         {
             _logger = logger;
             _userManagementBA = userManagementBA;
-            //_encryptionService = encryptionService;
+            _encryptionService = encryptionService;
             _configuration = configuration;
+            _encryptionService = encryptionService;
         }
 
         /// <summary>
@@ -86,7 +87,8 @@ namespace BSES.DocumentManagementSystem.Controllers
         {
             try
             {
-                string decryptedData = userModel.Credentials; //await _encryptionService.DecryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
+                //string encryptData = await _encryptionService.EncryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
+                string decryptedData = await _encryptionService.DecryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
                 string[] userData = decryptedData.Split(DMSConstants.DATA_DELIMITER);
                 if (userData.Length < 2)
                     return new BadRequestObjectResult($"Invalid credentials passed for the system.");

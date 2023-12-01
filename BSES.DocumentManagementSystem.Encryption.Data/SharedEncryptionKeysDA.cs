@@ -21,15 +21,15 @@ namespace BSES.DocumentManagementSystem.Encryption.Data
         }
 
         public async Task<IDictionary<string, string>> GetAllEncryptionIVKeysAsync(CancellationToken cancellationToken) =>
-                        await _context.DMSEncryptionKeys.ToDictionaryAsync(x => x.CompanyCode, x => x.EncryptionIV, cancellationToken);
+                        await _context.DMSEncryptionKeys.ToDictionaryAsync(x => x.CompanyCode.ToUpper(), x => x.EncryptionIV, cancellationToken);
 
         public async Task<IDictionary<string, string>> GetAllEncryptionKeysAsync(CancellationToken cancellationToken) =>
-                        await _context.DMSEncryptionKeys.ToDictionaryAsync(x => x.CompanyCode, x => x.EncryptionKey, cancellationToken);
+                        await _context.DMSEncryptionKeys.ToDictionaryAsync(x => x.CompanyCode.ToUpper(), x => x.EncryptionKey, cancellationToken);
 
         public Task<string> GetEncryptionIVKeysAsync(string companyCode, CancellationToken cancellationToken) =>
-                        _context.DMSEncryptionKeys.Where(x => x.CompanyCode == companyCode).Select(x => x.EncryptionIV).SingleAsync(cancellationToken);
+                        _context.DMSEncryptionKeys.Where(x => x.CompanyCode.ToUpper() == companyCode.ToUpper()).Select(x => x.EncryptionIV).SingleAsync(cancellationToken);
 
         public Task<string> GetEncryptionKeysAsync(string companyCode, CancellationToken cancellationToken) =>
-                        _context.DMSEncryptionKeys.Where(x => x.CompanyCode == companyCode).Select(x => x.EncryptionKey).SingleAsync(cancellationToken);
+                        _context.DMSEncryptionKeys.Where(x => x.CompanyCode.ToUpper() == companyCode.ToUpper()).Select(x => x.EncryptionKey).SingleAsync(cancellationToken);
     }
 }
