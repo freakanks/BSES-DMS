@@ -12,6 +12,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\BSES.DocumentManagementSystem.Data.Contracts\BSES.DocumentManagementSystem.Data.Contracts.csproj" />
+	  <ProjectReference Include="..\BSES.DocumentManagementSystem.Entities\BSES.DocumentManagementSystem.Entities.csproj" />
 	</ItemGroup>
 
 </Project>

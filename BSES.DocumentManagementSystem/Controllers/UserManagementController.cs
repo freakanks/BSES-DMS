@@ -1,13 +1,16 @@
 ﻿using BSES.DocumentManagementSystem.Business.Contracts;
 using BSES.DocumentManagementSystem.Common;
 using BSES.DocumentManagementSystem.Entities;
+using BSES.DocumentManagementSystem.Entities.Contracts;
 using BSES.DocumentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BSES.DocumentManagementSystem.Common;
 
 namespace BSES.DocumentManagementSystem.Controllers
 {
@@ -15,6 +18,7 @@ namespace BSES.DocumentManagementSystem.Controllers
     [ApiController]
     public class UserManagementController : ControllerBase
     {
+        private readonly ISession? _session;
         /// <summary>
         /// Creates a new JWT token base on the configured symmetric keys.
         /// </summary>
@@ -66,13 +70,16 @@ namespace BSES.DocumentManagementSystem.Controllers
         /// <param name="userManagementBA"></param> 
         /// <param name="encryptionService"></param>
         /// <param name="configuration"></param>
-        public UserManagementController(ILogger<UserManagementController> logger, IUserManagementBA userManagementBA, IConfiguration configuration, IEncryptorDecryptorBA encryptionService)
+
+        public UserManagementController(ILogger<UserManagementController> logger, IUserManagementBA userManagementBA,
+            IConfiguration configuration, IEncryptorDecryptorBA encryptionService, IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
             _userManagementBA = userManagementBA;
             _encryptionService = encryptionService;
             _configuration = configuration;
             _encryptionService = encryptionService;
+            _session = contextAccessor.HttpContext?.Session;
         }
 
         /// <summary>
@@ -99,7 +106,7 @@ namespace BSES.DocumentManagementSystem.Controllers
                     return new BadRequestObjectResult($"Invalid credentials passed for the system.");
 
                 string token = GetNewToken(userData[0]);
-
+                _session?.Add(DMSConstants.USER_SESSION_DATA, userEntity);
                 return new OkObjectResult(token);
             }
             catch (Exception ex)

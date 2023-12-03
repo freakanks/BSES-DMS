@@ -59,7 +59,8 @@ namespace BSES.DocumentManagementSystem.Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecretKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyCode = table.Column<string>(type: "nvarchar(max)", nullable: false),

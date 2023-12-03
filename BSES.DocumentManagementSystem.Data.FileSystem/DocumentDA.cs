@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using BSES.DocumentManagementSystem.Common;
-using BSES.DocumentManagementSystem.Entities.Contracts;
+using BSES.DocumentManagementSystem.Entities;
 
 namespace BSES.DocumentManagementSystem.Data.FileSystem
 {
@@ -32,7 +32,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
         public DocumentDA(ILogger<DocumentDA> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
-            ReadOnlySpan<char> companyCode = "BRPL"; //httpContextAccessor?.HttpContext?.Session?.Get<IDocumentUserEntity>(DMSConstants.USER_SESSION_DATA)?.CompanyCode;
+            ReadOnlySpan<char> companyCode = httpContextAccessor?.HttpContext?.Session?.Get<DocumentUserEntity>(DMSConstants.USER_SESSION_DATA)?.CompanyCode;
             _basePathForStorage = configuration.GetRequiredSection($"BasePathForStorage{companyCode}").Value ?? throw new Exception($"Base Path for storage is not defined in configuration.");
             _retrialCount = int.TryParse(configuration.GetRequiredSection("RetryCount").Value, out int value) ? value : 1;
         }

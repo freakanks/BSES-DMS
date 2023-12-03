@@ -10,8 +10,8 @@ namespace BSES.DocumentManagementSystem.Data
         /// <summary>
         /// Unique UserID.
         /// </summary>
-        [Key]
-        public string UserID { get; set; }
+        [Key]        
+        public int UserID { get; set; }
         /// <summary>
         /// Name of the user.
         /// </summary>                

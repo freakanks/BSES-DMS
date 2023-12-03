@@ -11,6 +11,10 @@ namespace BSES.DocumentManagementSystem.Business
     public class DocumentManagementBA : IDocumentManagementBA
     {
         /// <summary>
+        /// Readonly local instance of the current user.
+        /// </summary>
+        private readonly IDocumentUserEntity? _currentUser;
+        /// <summary>
         /// Readonly instance of logger.
         /// </summary>
         private readonly ILogger<DocumentManagementBA> _logger;
@@ -31,11 +35,6 @@ namespace BSES.DocumentManagementSystem.Business
         private readonly IDocumentLogEntityDA _documentLogEntityDA;
 
         /// <summary>
-        /// Current User Accessing the system.
-        /// </summary>
-        private readonly IDocumentUserEntity? _userEntity;
-
-        /// <summary>
         /// Default constructor.
         /// </summary>
         /// <param name="logger"></param>
@@ -49,20 +48,24 @@ namespace BSES.DocumentManagementSystem.Business
             _documentDA = documentDA;
             _documentEntityDA = documentEntityDA;
             _documentLogEntityDA = documentLogEntityDA;
-            _userEntity = httpContextAccessor.HttpContext.Session.Get<IDocumentUserEntity>(DMSConstants.USER_SESSION_DATA);
+            _currentUser = httpContextAccessor.HttpContext.Session.Get<DocumentUserEntity>(DMSConstants.USER_SESSION_DATA);
         }
 
-        ///<inheritdoc/>
+        ///<inheritdoc/>s
         public async Task<Result<(IDocumentEntity, Stream)>> GetDocumentAsync(string documentID, CancellationToken cancellationToken)
         {
             try
             {
-                await _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity?.UserID ?? "0", DocumentAction.Read), cancellationToken);
+                await _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _currentUser?.UserID!, DocumentAction.Read), cancellationToken);
 
                 var entity = await _documentEntityDA.GetDocumentAsync(documentID, cancellationToken);
                 if (entity == null)
                     return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
                         false, $"Something went wrong while fetching the document entity for the document id {documentID}");
+
+                if (_currentUser == null || !entity.DocumentPath.ToLower().Contains($@"\{_currentUser.CompanyCode.ToLower()}\"))
+                    return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
+                        false, $"User does not have the access rights for the document id {documentID}");
 
                 var stream = await _documentDA.GetDocumentAsync(entity.DocumentPath, cancellationToken);
 
@@ -86,7 +89,10 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
-                await _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _userEntity?.UserID ?? "0", DocumentAction.Delete), cancellationToken);
+                if (_currentUser == null || _currentUser.UserRight < DocumentUserRight.RemoveAccess)
+                    return new Result<bool>(false, false, $"User does not have rights to remove the document {documentID}");
+
+                await _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _currentUser?.UserID!, DocumentAction.Delete), cancellationToken);
 
                 var entity = await _documentEntityDA.RemoveDocumentAsync(documentID, cancellationToken);
                 if (entity == null)
@@ -111,6 +117,10 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
+                if (_currentUser == null || _currentUser.UserRight < DocumentUserRight.WriteAccess)
+                    return new Result<string>(string.Empty, false, $"User does not have rights to add the document {documentEntity.DocumentName}");
+
+
                 documentEntity.DocumentPath = await _documentDA.SaveDocumentAsync(documentEntity.DocumentName, documentStream, cancellationToken);
 
                 if (string.IsNullOrEmpty(documentEntity.DocumentPath))
@@ -122,7 +132,7 @@ namespace BSES.DocumentManagementSystem.Business
                 if (entity == null)
                     return new Result<string>(string.Empty, false, $"Something went wrong while saving the document entity record.");
 
-                await _documentLogEntityDA.SaveDocumentLogAsync(documentEntity.DocumentID, new DocumentLogEntity(documentEntity.DocumentID, _userEntity?.UserID ?? "0", DocumentAction.Write), cancellationToken);
+                await _documentLogEntityDA.SaveDocumentLogAsync(documentEntity.DocumentID, new DocumentLogEntity(documentEntity.DocumentID, _currentUser?.UserID!, DocumentAction.Write), cancellationToken);
 
                 return new Result<string>(documentEntity.DocumentID, true, string.Empty);
             }

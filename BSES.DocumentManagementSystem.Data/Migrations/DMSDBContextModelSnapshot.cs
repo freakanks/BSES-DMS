@@ -118,8 +118,11 @@ namespace BSES.DocumentManagementSystem.Data.Migrations
 
             modelBuilder.Entity("BSES.DocumentManagementSystem.Data.User", b =>
                 {
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
 
                     b.Property<string>("CompanyCode")
                         .IsRequired()

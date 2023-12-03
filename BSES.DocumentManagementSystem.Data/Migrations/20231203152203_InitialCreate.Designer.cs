@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSES.DocumentManagementSystem.Data.Migrations
 {
     [DbContext(typeof(DMSDBContext))]
-    [Migration("20231126155451_InitialCreate")]
+    [Migration("20231203152203_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -121,8 +121,11 @@ namespace BSES.DocumentManagementSystem.Data.Migrations
 
             modelBuilder.Entity("BSES.DocumentManagementSystem.Data.User", b =>
                 {
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
 
                     b.Property<string>("CompanyCode")
                         .IsRequired()

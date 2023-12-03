@@ -50,8 +50,8 @@ builder.Services.AddSwaggerGen(options =>
 
 ///DMS Services Registration.
 builder.Services.AddDistributedMemoryCache()
-                .AddSession()
                 .AddHttpContextAccessor()
+                .AddSession()
                 .AddJWT(builder.Configuration)
                 .AddDataServicesFileSystem()
                 .AddDataServicesDB(builder.Configuration)

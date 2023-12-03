@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\BSES.DocumentManagementSystem.Business\BSES.DocumentManagementSystem.Business.csproj" />
+		<ProjectReference Include="..\BSES.DocumentManagementSystem.Common\BSES.DocumentManagementSystem.Common.csproj" />
 		<ProjectReference Include="..\BSES.DocumentManagementSystem.Data.FileSystem\BSES.DocumentManagementSystem.Data.FileSystem.csproj" />
 		<ProjectReference Include="..\BSES.DocumentManagementSystem.Data\BSES.DocumentManagementSystem.Data.csproj" />
 		<ProjectReference Include="..\BSES.DocumentManagementSystem.Encryption.Data\BSES.DocumentManagementSystem.Encryption.Data.csproj" />

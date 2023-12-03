@@ -20,7 +20,7 @@ namespace BSES.DocumentManagementSystem.Data
         /// <param name="user"></param>
         /// <returns></returns>
         private IDocumentUserEntity? ModelToUserEntity(User? user, bool isAuthenticated = false) => user == null ? null :
-            new DocumentUserEntity(user.UserID, user.UserName, user.SecretKey, user.CompanyCode, isAuthenticated,
+            new DocumentUserEntity($"{user.UserID}", user.UserName, user.SecretKey, user.CompanyCode, isAuthenticated,
                 Enum.TryParse($"{user.UserRight}", out DocumentUserRight userRight) ? userRight : DocumentUserRight.ReadAccess,
                 Enum.TryParse($"{user.UserAccessScope}", out UserAccessScope accessScope) ? accessScope : UserAccessScope.InternalUser)
             {
@@ -39,7 +39,6 @@ namespace BSES.DocumentManagementSystem.Data
         private User? EntityToUserModel(IDocumentUserEntity? user) => user == null ? null :
             new User()
             {
-                UserID = user.UserID,
                 SecretKey = user.SecretKey,
                 CompanyCode = user.CompanyCode,
                 UserName = user.UserName,
@@ -59,7 +58,7 @@ namespace BSES.DocumentManagementSystem.Data
         }
 
         public async Task<bool> RemoveAsync(string userID, CancellationToken cancellationToken) =>
-           (await _context.Users.Where(x => x.UserID == userID).ExecuteDeleteAsync(cancellationToken)) > 0;
+           (await _context.Users.Where(x => x.UserID == Convert.ToInt32(userID)).ExecuteDeleteAsync(cancellationToken)) > 0;
 
 
         public async Task<IDocumentUserEntity> SaveAsync(IDocumentUserEntity user, CancellationToken cancellationToken)
@@ -74,7 +73,7 @@ namespace BSES.DocumentManagementSystem.Data
 
         public async Task<IDocumentUserEntity> UpdateAsync(string userID, string secretKey, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.SingleAsync(x => x.UserID == userID, cancellationToken);
+            var user = await _context.Users.SingleAsync(x => x.UserID == Convert.ToInt32(userID), cancellationToken);
             user.SecretKey = secretKey;
             await _context.SaveChangesAsync(cancellationToken);
             return ModelToUserEntity(user)!;
@@ -82,7 +81,7 @@ namespace BSES.DocumentManagementSystem.Data
 
         public async Task<IDocumentUserEntity> UpdatesAsync(string userID, DocumentUserRight userRights, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.SingleAsync(x => x.UserID == userID, cancellationToken);
+            var user = await _context.Users.SingleAsync(x => x.UserID == Convert.ToInt32(userID), cancellationToken);
             user.UserRight = (int)userRights;
             await _context.SaveChangesAsync(cancellationToken);
             return ModelToUserEntity(user)!;
@@ -90,7 +89,7 @@ namespace BSES.DocumentManagementSystem.Data
 
         public async Task<IDocumentUserEntity?> GetAsync(string userID, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.Where(x => x.UserID == userID).FirstOrDefaultAsync(cancellationToken);
+            var user = await _context.Users.Where(x => x.UserID == Convert.ToInt32(userID)).FirstOrDefaultAsync(cancellationToken);
             return ModelToUserEntity(user);
         }
 
