@@ -1,5 +1,6 @@
 ﻿using BSES.DocumentManagementSystem.Business.Contracts;
 using BSES.DocumentManagementSystem.Common;
+using BSES.DocumentManagementSystem.Entities;
 using BSES.DocumentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -109,11 +110,14 @@ namespace BSES.DocumentManagementSystem.Controllers
         }
 
         [HttpPost("CreateUser")]
+        [Authorize]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserModel userModel, CancellationToken cancellationToken)
         {
             try
             {
-
+                var user = await _userManagementBA.SaveDocumentUserAsync(new DocumentUserEntity(string.Empty, userModel.UserName, userModel.Password, userModel.CompanyCode, false, default, default), cancellationToken);
+                if (user != null)
+                    return new OkObjectResult($"User had been created with user name {userModel.UserName}");
             }
             catch (Exception e)
             {
