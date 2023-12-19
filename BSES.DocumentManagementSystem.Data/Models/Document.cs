@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BSES.DocumentManagementSystem.Data
 {
@@ -47,5 +46,9 @@ namespace BSES.DocumentManagementSystem.Data
         /// Comma seperated user ids attached.
         /// </summary>
         public string? Users { get; set; }
+        /// <summary>
+        /// Flag if the document has been archived.
+        /// </summary>
+        public bool IsArchived {  get; set; }
     }
 }

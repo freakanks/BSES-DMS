@@ -12,7 +12,7 @@ namespace BSES.DocumentManagementSystem.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             //options.UseOracle(configuration.GetConnectionString("DMS_DATABASE"));
-            //options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DMSApplication;Integrated Security=True;Connection Timeout=15;MultipleActiveResultSets=true");
+            //options.UseOracle("Data Source=10.125.64.73:1521/ebstest;User Id=mobapp;Password=mobapp;Connection Timeout=15;");
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Document> Documents { get; set; }

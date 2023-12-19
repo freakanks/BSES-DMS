@@ -61,8 +61,8 @@ namespace BSES.DocumentManagementSystem.Controllers
                 if (result == null || !result.IsSuccess)
                     return new OkObjectResult(result?.ErrorMessage ?? "Something went wrong while getting the document.");
 
-                var stream = result.Value.Item2;             
-
+                var stream = result.Value.Item2;
+                
                 return new FileStreamResult(stream, new FileExtensionContentTypeProvider().TryGetContentType(result.Value.Item1.DocumentName, out string? contentType) ? contentType : "application/octet-stream");
 
             }
@@ -97,8 +97,8 @@ namespace BSES.DocumentManagementSystem.Controllers
             }
         }
 
-        [HttpPost("RemoveDocument")]
-        public async Task<IActionResult> RemoveDocumentAsync([FromBody]string documentID, CancellationToken cancellationToken = default)
+        [HttpPost("RemoveDocument/{documentID}")]
+        public async Task<IActionResult> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -113,6 +113,31 @@ namespace BSES.DocumentManagementSystem.Controllers
             {
                 _logger.LogError($"{e}");
                 return new BadRequestObjectResult($"Something went wrong while removing the document for id {documentID}");
+            }
+        }
+
+        [HttpGet("ArchiveDocument/{documentID}")]
+        public async Task<IActionResult> ArchiveDocumentAsync(string documentID, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                //TODO: this is tempoerary and will be changed.
+                var result = await _documentManagementBA.GetDocumentAsync(documentID, cancellationToken);
+
+                if (result == null || !result.IsSuccess)
+                    return new OkObjectResult(result?.ErrorMessage ?? "Something went wrong while getting the document.");
+
+                var archiveResult = await _documentManagementBA.MarkDocumentArchiveAsync(result.Value.Item1, "BRPL", cancellationToken);
+
+                if (archiveResult == null || !archiveResult.Value)
+                    return new BadRequestObjectResult(result?.ErrorMessage ?? "Something went wrong while archiving the document.");
+
+                return new OkObjectResult($"Document had been archived.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"{e}");
+                return new BadRequestObjectResult($"Something went wrong while archiving the document for id {documentID}");
             }
         }
     }

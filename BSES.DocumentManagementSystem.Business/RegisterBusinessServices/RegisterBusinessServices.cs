@@ -11,7 +11,8 @@ namespace BSES.DocumentManagementSystem.Business
         /// <param name="services"></param>
         /// <returns></returns>
         public static IServiceCollection AddBusinessServices(this IServiceCollection services) =>
-            services.AddSingleton<IEncryptorDecryptorBA, EncryptorDecryptorBA>()
+            services
+                    //.AddSingleton<IEncryptorDecryptorBA, EncryptorDecryptorBA>()
                     .AddScoped<IUserManagementBA, UserManagementBA>()
                     .AddScoped<IDocumentManagementBA, DocumentManagementBA>();
     }

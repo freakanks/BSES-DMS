@@ -15,5 +15,6 @@ namespace BSES.DocumentManagementSystem.Entities
         public IEnumerable<IDocumentUserEntity> Users { get; set; } = Enumerable.Empty<IDocumentUserEntity>();
         public DocumentCategory Category { get; set; } = DocumentCategory.KYC;
         public long Year { get; set; } = DateTime.Now.Year;
+        public bool IsArchived { get; set; } = false;
     }
 }

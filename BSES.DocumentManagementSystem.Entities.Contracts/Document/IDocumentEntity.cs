@@ -43,6 +43,10 @@ namespace BSES.DocumentManagementSystem.Entities.Contracts
         /// Explicit users which are external to the system and can access the document.
         /// </summary>
         public IEnumerable<IDocumentUserEntity> Users { get; set; }
+        /// <summary>
+        /// Flag reflects if the document had been archived.
+        /// </summary>
+        public bool IsArchived { get; set; }
     }
     /// <summary>
     /// Enum for the type of documents supported.

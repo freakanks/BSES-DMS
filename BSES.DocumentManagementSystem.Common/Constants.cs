@@ -11,6 +11,8 @@
         public const string JWT_AUDIENCE_CONFIG_KEY = "Jwt:Audience";
         public const string JWT_SECRET_KEY_CONFIG_KEY = "Jwt:Key";
         public const string BASE_STORAGE_PATH_KEY = "BasePathForStorage";
+        public const string BASE_PATH_FOR_ARCHIVAL_STORAGE = "BasePathForArchivalStorage";
+        public const string WATER_MARK_TEXT = "WaterMarkText";
 
         //Constants Keys for Tokens.
         public const string TOKEN = "X-CSRF-TOKEN";

@@ -21,6 +21,7 @@ namespace BSES.DocumentManagementSystem.Data
             DocumentAccessScope = Enum.TryParse($"{document.DocumentAccessScope}", out DocumentAccessScope scope) ? scope : DocumentAccessScope.Internal,
             Category = Enum.TryParse($"{document.Category}", out DocumentCategory category) ? category : DocumentCategory.KYC,
             Year = document.Year,
+            IsArchived = document.IsArchived,
 
             CreatedDateTime = document.CreatedDateTime,
             CreatedUserID = document.CreatedUserID,
@@ -39,6 +40,7 @@ namespace BSES.DocumentManagementSystem.Data
             DocumentAccessScope = (int)documentEntity.DocumentAccessScope,
             Category = (int)documentEntity.Category,
             Year = documentEntity.Year,
+            IsArchived = documentEntity.IsArchived,
 
             CreatedDateTime = documentEntity.CreatedDateTime,
             CreatedUserID = documentEntity.CreatedUserID,
@@ -57,11 +59,12 @@ namespace BSES.DocumentManagementSystem.Data
             return DocumentModelToEntity(document);
         }
 
-        public async Task<IDocumentEntity?> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken)
+        public async Task<IDocumentEntity?> RemoveDocumentAsync(string documentID,string userID, CancellationToken cancellationToken)
         {
             var document = await _context.Documents.Where(x => x.DocumentID == documentID).FirstOrDefaultAsync(cancellationToken);
             if (document == null) return null;
             document.RecordStatusCode = (int)RecordStatusCode.InActive;
+            document.UpdatedUserID = userID;
             document.UpdatedDateTime = DateTime.Now;
             await _context.SaveChangesAsync(cancellationToken);
             return DocumentModelToEntity(document);
@@ -89,6 +92,18 @@ namespace BSES.DocumentManagementSystem.Data
         public Task<IDocumentEntity> UpdateDocumentAsync(string documentID, IDocumentEntity newDocument, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> MarkDocumentArchivedOrUnArchivedAsync(string documentID, string newPath, bool archived, CancellationToken cancellationToken)
+        {
+            var document = await _context.Documents.Where(x => x.DocumentID == documentID && x.RecordStatusCode == (int)RecordStatusCode.Active).FirstOrDefaultAsync(cancellationToken);
+            if (document == null) return false;
+            document.IsArchived = archived;
+            document.DocumentPath = newPath;
+            document.UpdatedDateTime = DateTime.Now;
+            document.UpdatedUserID = "ArchivalSystem";
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
         }
     }
 }

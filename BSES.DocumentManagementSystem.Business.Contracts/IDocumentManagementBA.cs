@@ -31,5 +31,15 @@ namespace BSES.DocumentManagementSystem.Business.Contracts
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<Result<bool>> RemoveDocumentAsync(string documentID, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Watermarks the pdf and images and the archive the document.
+        /// Path for new document will be updated to database and doucment will be marked as archived.
+        /// </summary>
+        /// <param name="documentID"></param>
+        /// <param name="companyCode"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<bool>> MarkDocumentArchiveAsync(IDocumentEntity documentEntity, string companyCode, CancellationToken cancellationToken);
     }
 }

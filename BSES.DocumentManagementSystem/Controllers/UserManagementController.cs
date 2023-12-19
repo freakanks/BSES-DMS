@@ -44,10 +44,12 @@ namespace BSES.DocumentManagementSystem.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
         }
+        
         /// <summary>
         /// Local instance for the Encryption/Decryption.
         /// </summary>
-        private readonly IEncryptorDecryptorBA _encryptionService;
+        //private readonly IEncryptorDecryptorBA _encryptionService;
+        
         /// <summary>
         /// Internal Logger for this class instance.
         /// </summary>
@@ -72,13 +74,12 @@ namespace BSES.DocumentManagementSystem.Controllers
         /// <param name="configuration"></param>
 
         public UserManagementController(ILogger<UserManagementController> logger, IUserManagementBA userManagementBA,
-            IConfiguration configuration, IEncryptorDecryptorBA encryptionService, IHttpContextAccessor contextAccessor)
+            IConfiguration configuration, IHttpContextAccessor contextAccessor) //IEncryptorDecryptorBA encryptionService
         {
             _logger = logger;
             _userManagementBA = userManagementBA;
-            _encryptionService = encryptionService;
             _configuration = configuration;
-            _encryptionService = encryptionService;
+            //_encryptionService = encryptionService;
             _session = contextAccessor.HttpContext?.Session;
         }
 
@@ -96,8 +97,10 @@ namespace BSES.DocumentManagementSystem.Controllers
             try
             {
                 //string encryptData = await _encryptionService.EncryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
-                string decryptedData = await _encryptionService.DecryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
-                string[] userData = decryptedData.Split(DMSConstants.DATA_DELIMITER);
+                //string decryptedData = await _encryptionService.DecryptAsync(userModel.Credentials, userModel.CompanyCode, cancellationToken);
+                if (string.IsNullOrEmpty(userModel.Credentials)) return new BadRequestObjectResult($"Invalid credentials passed for the system.");
+
+                string[] userData = userModel.Credentials.Split(DMSConstants.DATA_DELIMITER);
                 if (userData.Length < 2)
                     return new BadRequestObjectResult($"Invalid credentials passed for the system.");
 

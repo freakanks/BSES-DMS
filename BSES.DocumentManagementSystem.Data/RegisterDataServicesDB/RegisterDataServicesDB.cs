@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Oracle.EntityFrameworkCore.Query.Internal;
-using System.Configuration;
 
 namespace BSES.DocumentManagementSystem.Data
 {
@@ -12,8 +10,7 @@ namespace BSES.DocumentManagementSystem.Data
         public static IServiceCollection AddDataServicesDB(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<DMSDBContext>(options =>
                                                 {
-                                                    //options.UseOracle(configuration.GetConnectionString("DMS_DATABASE"));
-                                                    options.UseSqlServer(configuration.GetConnectionString("DMS_DATABASE"));
+                                                    options.UseOracle(configuration.GetConnectionString("DMS_DATABASE"));
                                                 })
                     .AddScoped<IDocumentEntityDA, DocumentDA>()
                     .AddScoped<IDocumentUserEntityDA, DocumentUserEntityDA>()
