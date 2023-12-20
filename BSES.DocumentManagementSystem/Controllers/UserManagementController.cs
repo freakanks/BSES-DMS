@@ -1,16 +1,13 @@
 ﻿using BSES.DocumentManagementSystem.Business.Contracts;
 using BSES.DocumentManagementSystem.Common;
 using BSES.DocumentManagementSystem.Entities;
-using BSES.DocumentManagementSystem.Entities.Contracts;
 using BSES.DocumentManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BSES.DocumentManagementSystem.Common;
 
 namespace BSES.DocumentManagementSystem.Controllers
 {
@@ -37,7 +34,9 @@ namespace BSES.DocumentManagementSystem.Controllers
                 new Claim(ClaimTypes.Authentication, "true"),
                 new Claim(JwtRegisteredClaimNames.Sub, $"{userName}")
             };
-            var expires = DateTime.Now.AddHours(2);
+            var sessionTimeOut = _configuration.GetValue<int>(DMSConstants.SESSION_TIMEOUT_MINUTES);
+            sessionTimeOut = sessionTimeOut != 0 ? sessionTimeOut : 240;
+            var expires = DateTime.Now.AddMinutes(sessionTimeOut);
 
             var token = new JwtSecurityToken(issuer, audience, claims, expires: expires, signingCredentials: signinCredentials);
 

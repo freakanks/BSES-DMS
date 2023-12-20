@@ -20,5 +20,7 @@
         public const string HKEY_BSES_RAJDHANI = "SOFTWARE\\HKEY_BSES_RAJDHANI";
         public const string DMSEncryptionKey = "DMSEncryptionKey";
         public const string DMSKeyForIV = "DMSEncryptionIV";
+
+        public const string SESSION_TIMEOUT_MINUTES = nameof(SESSION_TIMEOUT_MINUTES);
     }
 }

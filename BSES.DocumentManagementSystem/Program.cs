@@ -1,9 +1,11 @@
 using BSES.DocumentManagementSystem;
 using BSES.DocumentManagementSystem.Business;
+using BSES.DocumentManagementSystem.Common;
 using BSES.DocumentManagementSystem.Data;
 using BSES.DocumentManagementSystem.Data.FileSystem;
 using BSES.DocumentManagementSystem.Encryption.Data;
 using Microsoft.OpenApi.Models;
+using Oracle.EntityFrameworkCore.Query.Internal;
 using Serilog;
 
 
@@ -31,7 +33,7 @@ builder.Services.AddSwaggerGen(options =>
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
         Description = "JWT Authorization Header using the Bearer scheme. \r\n\r\n",
-        
+
     });
     options.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {
@@ -45,13 +47,16 @@ builder.Services.AddSwaggerGen(options =>
             },
             new string[] {}
         }
-    }); 
+    });
 });
+var sessionTimeOut = builder.Configuration.GetValue<int>(DMSConstants.SESSION_TIMEOUT_MINUTES);
+sessionTimeOut = sessionTimeOut != 0 ? sessionTimeOut : 240;
 
 ///DMS Services Registration.
 builder.Services.AddDistributedMemoryCache()
                 .AddHttpContextAccessor()
-                .AddSession()
+                .ConfigureApplicationCookie(options => options.Cookie.Expiration = TimeSpan.FromMinutes(sessionTimeOut))
+                .AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(sessionTimeOut))
                 .AddJWT(builder.Configuration)
                 .AddDataServicesFileSystem()
                 .AddDataServicesDB(builder.Configuration)
