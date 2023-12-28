@@ -11,6 +11,9 @@ using PdfSharp.Drawing;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Drawing.Imaging;
+using SkiaSharp;
+using System.Runtime.InteropServices;
+using PdfSharp.Fonts;
 
 namespace BSES.DocumentManagementSystem.Data.FileSystem
 {
@@ -46,19 +49,22 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
         {
             string? watermarktext = _configuration.GetRequiredSection($"{DMSConstants.WATER_MARK_TEXT}{companyCode}").Value;
             if (string.IsNullOrEmpty(watermarktext))
-                throw new InvalidOperationException($"Water Mark can not be applied as can not fin one for {companyCode}");
+                throw new InvalidOperationException($"Water Mark can not be applied as can not find one for {companyCode}");
 
             string extension = Path.GetExtension(documentPath).ToUpper();
             string documentName = Path.GetFileNameWithoutExtension(documentPath);
-            string baseFolder = $"{archivalFolder}\\{DateTime.Now.Year}\\{DateTime.Now.Month}";
+            string baseFolder = Path.Combine(archivalFolder, $"{DateTime.Now.Year}", $"{DateTime.Now.Month}");
             Directory.CreateDirectory(baseFolder);
-            string outpuPath = $"{baseFolder}\\{documentName}_watermarked{extension}";
+            string outpuPath = Path.Combine(baseFolder, $"{documentName}_watermarked{extension}");
 
             if (extension == ".PDF")
             {
-                var document = PdfReader.Open(documentPath);
+                var document = PdfReader.Open(documentPath, PdfDocumentOpenMode.Import);
                 var newDocument = new PdfDocument();
-                XFont font = new XFont("ArialMT", 48, XFontStyleEx.Bold);
+                if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                    GlobalFontSettings.FontResolver = new CustomFontResolver();
+
+                XFont font = new XFont("ArialMT", 40, XFontStyleEx.Bold);
 
                 foreach (PdfPage page in document.Pages)
                 {
@@ -68,9 +74,9 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
                     using (XGraphics gfx = XGraphics.FromPdfPage(newPage, XGraphicsPdfPageOptions.Append))
                     {
                         // Create a semi-transparent watermark
-                        XBrush brush = new XSolidBrush(XColor.FromArgb(128, XColor.FromKnownColor(XKnownColor.Gray)));
+                        XBrush brush = new XSolidBrush(XColor.FromArgb(50, XColor.FromKnownColor(XKnownColor.DarkRed)));
                         gfx.DrawString(watermarktext, font, brush,
-                            new XPoint(newPage.Width / 8, newPage.Height / 2),
+                            new XPoint(newPage.Width / 16, newPage.Height / 2),
                             XStringFormats.Center);
                     }
                 }
@@ -81,25 +87,32 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
             }
             else if (extension == ".JPG" || extension == ".JPEG" || extension == ".PNG")
             {
-                using (Image image = Image.FromFile(documentPath))
+                using (SKBitmap bitmap = SKBitmap.Decode(documentPath))
+                using (SKCanvas canvas = new SKCanvas(bitmap))
+                using (SKPaint paint = new SKPaint())
                 {
-                    using (Graphics graphics = Graphics.FromImage(image))
+                    // Determine text size and position
+                    paint.TextSize = 50;
+                    paint.StrokeWidth = 2;
+                    paint.Style = SKPaintStyle.Stroke;
+                    paint.StrokeJoin = SKStrokeJoin.Round;
+                    paint.PathEffect = SKPathEffect.CreateDash(new float[] { 5, 5 }, 0); // Dashed outline effect
+                    paint.Color = new SKColor(242, 44, 61, (byte)(255 * 0.7));
+
+                    SKRect bounds = new SKRect();
+                    paint.MeasureText(watermarktext, ref bounds);
+                    float x = (bitmap.Width - bounds.Width) / 2;
+                    float y = (bitmap.Height + bounds.Height) / 2;
+
+                    // Draw the watermark text on the image
+                    canvas.DrawText(watermarktext, x, y, paint);
+
+                    // Save the modified image to the output path
+                    using (SKImage image = SKImage.FromBitmap(bitmap))
+                    using (SKData data = image.Encode())
+                    using (FileStream stream = File.OpenWrite(outpuPath))
                     {
-                        var watermarkFont = new Font("Arial", 24); // Watermark font
-
-                        // Define the watermark position (adjust as needed)
-                        PointF watermarkLocation = new PointF(image.Width / 8, image.Height / 2);
-
-                        // Define the watermark color and transparency
-                        Brush brush = new SolidBrush(Color.FromArgb(128, Color.Gray)); // Semi-transparent gray
-
-                        graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-                        // Draw the watermark on the image
-                        graphics.DrawString(watermarktext, watermarkFont, brush, watermarkLocation);
-
-                        // Save the image with the watermark
-                        image.Save(outpuPath, ImageFormat.Jpeg);
+                        data.SaveTo(stream);
                     }
                 }
                 return outpuPath;
@@ -158,7 +171,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
                     if (!File.Exists(documentPath))
                         return null;
 
-                    var fileStream = new FileStream(documentPath, FileMode.Open, FileAccess.Read);                    
+                    var fileStream = new FileStream(documentPath, FileMode.Open, FileAccess.Read);
                     return fileStream;
                 }
                 catch (Exception e)
@@ -225,7 +238,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
             string? baseStoragePath = _configuration.GetRequiredSection($"{DMSConstants.BASE_STORAGE_PATH_KEY}{companyCode}").Value;
             if (string.IsNullOrEmpty(baseStoragePath))
                 throw new InvalidOperationException($"Base storage Path had been not defined for the company code {companyCode}");
-            string originalDocumentpath = Path.Combine(baseStoragePath, Path.GetFileNameWithoutExtension(documentPath).Replace("_watermarked",""));
+            string originalDocumentpath = Path.Combine(baseStoragePath, $"{DateTime.Now.Year}", $"{DateTime.Now.Month}", Path.GetFileNameWithoutExtension(documentPath).Replace("_watermarked", ""));
 
             using var fileStream = new FileStream(originalDocumentpath, FileMode.Create, FileAccess.Write);
             using var zippedFile = new FileStream(documentPath, FileMode.Open, FileAccess.Read);

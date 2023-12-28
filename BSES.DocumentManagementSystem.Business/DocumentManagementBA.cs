@@ -91,7 +91,7 @@ namespace BSES.DocumentManagementSystem.Business
                     return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
                         false, $"Something went wrong while fetching the document entity for the document id {documentID}");
 
-                if (_currentUser == null || !entity.DocumentPath.ToLower().Contains($@"{_currentUser.CompanyCode.ToLower()}\"))
+                if (_currentUser == null || !entity.DocumentPath.ToLower().Contains($@"{_currentUser.CompanyCode.ToLower()}"))
                     return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
                         false, $"User does not have the access rights for the document id {documentID}");
 

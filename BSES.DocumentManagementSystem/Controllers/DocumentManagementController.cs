@@ -62,7 +62,7 @@ namespace BSES.DocumentManagementSystem.Controllers
                     return new OkObjectResult(result?.ErrorMessage ?? "Something went wrong while getting the document.");
 
                 var stream = result.Value.Item2;
-                
+
                 return new FileStreamResult(stream, new FileExtensionContentTypeProvider().TryGetContentType(result.Value.Item1.DocumentName, out string? contentType) ? contentType : "application/octet-stream");
 
             }

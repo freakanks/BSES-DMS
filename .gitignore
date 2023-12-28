@@ -229,3 +229,5 @@
 /Publish
 /BSES.DocumentManagementSystem.Entities/bin/Release/net6.0
 /BSES.DocumentManagementSystem.Entities/obj/Release/net6.0
+/BSES.DocumentManagementSystem/BRPL/Documents
+/Publish.zip
