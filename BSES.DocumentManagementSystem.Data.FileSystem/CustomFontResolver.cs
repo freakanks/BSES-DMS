@@ -1,7 +1,17 @@
-﻿using PdfSharp.Fonts;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PdfSharp.Fonts;
 
 namespace BSES.DocumentManagementSystem.Data.FileSystem
 {
+    public static class RegisterGlobalFontResolver
+    {
+        public static IServiceCollection AddGlobalFontResolver(this IServiceCollection services)
+        {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                GlobalFontSettings.FontResolver = new CustomFontResolver();
+            return services;
+        }
+    }
     internal class CustomFontResolver : IFontResolver
     {
         public byte[] GetFont(string faceName)

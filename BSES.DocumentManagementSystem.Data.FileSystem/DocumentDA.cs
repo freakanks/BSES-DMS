@@ -60,11 +60,9 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
             if (extension == ".PDF")
             {
                 var document = PdfReader.Open(documentPath, PdfDocumentOpenMode.Import);
-                var newDocument = new PdfDocument();
-                if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-                    GlobalFontSettings.FontResolver = new CustomFontResolver();
+                var newDocument = new PdfDocument();               
 
-                XFont font = new XFont("ArialMT", 40, XFontStyleEx.Bold);
+                XFont font = new XFont("ArialMT", 38, XFontStyleEx.Bold);
 
                 foreach (PdfPage page in document.Pages)
                 {
@@ -76,7 +74,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
                         // Create a semi-transparent watermark
                         XBrush brush = new XSolidBrush(XColor.FromArgb(50, XColor.FromKnownColor(XKnownColor.DarkRed)));
                         gfx.DrawString(watermarktext, font, brush,
-                            new XPoint(newPage.Width / 16, newPage.Height / 2),
+                            new XPoint(newPage.Width / 2, newPage.Height / 2),
                             XStringFormats.Center);
                     }
                 }
@@ -93,11 +91,10 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
                 {
                     // Determine text size and position
                     paint.TextSize = 50;
-                    paint.StrokeWidth = 2;
-                    paint.Style = SKPaintStyle.Stroke;
+                    paint.StrokeWidth = 4;
+                    paint.Style = SKPaintStyle.Fill;
                     paint.StrokeJoin = SKStrokeJoin.Round;
-                    paint.PathEffect = SKPathEffect.CreateDash(new float[] { 5, 5 }, 0); // Dashed outline effect
-                    paint.Color = new SKColor(242, 44, 61, (byte)(255 * 0.7));
+                    paint.Color = new SKColor(242, 44, 61, (byte)(255 * 0.2));
 
                     SKRect bounds = new SKRect();
                     paint.MeasureText(watermarktext, ref bounds);

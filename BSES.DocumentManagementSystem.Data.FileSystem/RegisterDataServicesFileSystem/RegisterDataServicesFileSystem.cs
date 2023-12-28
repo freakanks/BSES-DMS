@@ -6,6 +6,7 @@ namespace BSES.DocumentManagementSystem.Data.FileSystem
     public static class RegisterDataServicesFileSystem
     {
         public static IServiceCollection AddDataServicesFileSystem(this IServiceCollection services) =>
-            services.AddScoped<IDocumentDA, DocumentDA>();
+            services.AddScoped<IDocumentDA, DocumentDA>()
+                    .AddGlobalFontResolver();
     }
 }
