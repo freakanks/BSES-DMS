@@ -84,6 +84,10 @@ namespace BSES.DocumentManagementSystem.Business
         {
             try
             {
+                if(_currentUser == null || string.IsNullOrEmpty(_currentUser.UserID))
+                    return new Result<(IDocumentEntity, Stream)>(ValueTuple.Create<IDocumentEntity, Stream>(default, default),
+                        false, $"There is no user attached to the current session. Kindly get in touch with administrator.");
+
                 await _documentLogEntityDA.SaveDocumentLogAsync(documentID, new DocumentLogEntity(documentID, _currentUser?.UserID!, DocumentAction.Read), cancellationToken);
 
                 var entity = await _documentEntityDA.GetDocumentAsync(documentID, cancellationToken);
