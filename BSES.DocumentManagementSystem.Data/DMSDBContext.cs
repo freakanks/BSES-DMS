@@ -7,6 +7,10 @@ namespace BSES.DocumentManagementSystem.Data
         public DMSDBContext(DbContextOptions<DMSDBContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("MOBAPP");
+            modelBuilder.Entity<User>(user => user.ToTable("USERS"));
+            modelBuilder.Entity<Document>(user => user.ToTable("DOCUMENTS"));
+            modelBuilder.Entity<AccessLog>(user => user.ToTable("ACCESSLOGS"));
             base.OnModelCreating(modelBuilder);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
